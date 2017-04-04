@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jason798.timing.mapper.gen.GenTaskMapper">
+  <resultMap id="BaseResultMap" type="com.jason798.timing.domain.gen.GenTask">
+    <id column="TID" jdbcType="BIGINT" property="tid" />
+    <result column="TKEY" jdbcType="VARCHAR" property="tkey" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="CONF_TYPE" jdbcType="CHAR" property="confType" />
+    <result column="CONF_START_TM" jdbcType="BIGINT" property="confStartTm" />
+    <result column="CONF_EXE_TIMES" jdbcType="BIGINT" property="confExeTimes" />
+    <result column="CONF_INTERVAL_UNIT" jdbcType="VARCHAR" property="confIntervalUnit" />
+    <result column="CONF_INTERVAL" jdbcType="BIGINT" property="confInterval" />
+    <result column="STATUS_PROCESSOR" jdbcType="VARCHAR" property="statusProcessor" />
+    <result column="STATUS_LAST_EXE_TM" jdbcType="BIGINT" property="statusLastExeTm" />
+    <result column="STATUS_RUNED_TIME" jdbcType="BIGINT" property="statusRunedTime" />
+    <result column="PROCESSING" jdbcType="CHAR" property="processing" />
+    <result column="EXECUTING" jdbcType="CHAR" property="executing" />
+    <result column="SERVICE_NAME" jdbcType="VARCHAR" property="serviceName" />
+    <result column="VALID" jdbcType="CHAR" property="valid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    TID, TKEY, NAME, CONF_TYPE, CONF_START_TM, CONF_EXE_TIMES, CONF_INTERVAL_UNIT, CONF_INTERVAL, 
+    STATUS_PROCESSOR, STATUS_LAST_EXE_TM, STATUS_RUNED_TIME, PROCESSING, EXECUTING, SERVICE_NAME, 
+    VALID
+  </sql>
+  <select id="selectByExample" parameterType="com.jason798.timing.domain.gen.GenTaskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ts_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ts_task
+    where TID = #{tid,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.jason798.timing.domain.gen.GenTask">
+    insert into ts_task (TID, TKEY, NAME, 
+      CONF_TYPE, CONF_START_TM, CONF_EXE_TIMES, 
+      CONF_INTERVAL_UNIT, CONF_INTERVAL, STATUS_PROCESSOR, 
+      STATUS_LAST_EXE_TM, STATUS_RUNED_TIME, PROCESSING, 
+      EXECUTING, SERVICE_NAME, VALID
+      )
+    values (#{tid,jdbcType=BIGINT}, #{tkey,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{confType,jdbcType=CHAR}, #{confStartTm,jdbcType=BIGINT}, #{confExeTimes,jdbcType=BIGINT}, 
+      #{confIntervalUnit,jdbcType=VARCHAR}, #{confInterval,jdbcType=BIGINT}, #{statusProcessor,jdbcType=VARCHAR}, 
+      #{statusLastExeTm,jdbcType=BIGINT}, #{statusRunedTime,jdbcType=BIGINT}, #{processing,jdbcType=CHAR}, 
+      #{executing,jdbcType=CHAR}, #{serviceName,jdbcType=VARCHAR}, #{valid,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jason798.timing.domain.gen.GenTask">
+    insert into ts_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        TID,
+      </if>
+      <if test="tkey != null">
+        TKEY,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="confType != null">
+        CONF_TYPE,
+      </if>
+      <if test="confStartTm != null">
+        CONF_START_TM,
+      </if>
+      <if test="confExeTimes != null">
+        CONF_EXE_TIMES,
+      </if>
+      <if test="confIntervalUnit != null">
+        CONF_INTERVAL_UNIT,
+      </if>
+      <if test="confInterval != null">
+        CONF_INTERVAL,
+      </if>
+      <if test="statusProcessor != null">
+        STATUS_PROCESSOR,
+      </if>
+      <if test="statusLastExeTm != null">
+        STATUS_LAST_EXE_TM,
+      </if>
+      <if test="statusRunedTime != null">
+        STATUS_RUNED_TIME,
+      </if>
+      <if test="processing != null">
+        PROCESSING,
+      </if>
+      <if test="executing != null">
+        EXECUTING,
+      </if>
+      <if test="serviceName != null">
+        SERVICE_NAME,
+      </if>
+      <if test="valid != null">
+        VALID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=BIGINT},
+      </if>
+      <if test="tkey != null">
+        #{tkey,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="confType != null">
+        #{confType,jdbcType=CHAR},
+      </if>
+      <if test="confStartTm != null">
+        #{confStartTm,jdbcType=BIGINT},
+      </if>
+      <if test="confExeTimes != null">
+        #{confExeTimes,jdbcType=BIGINT},
+      </if>
+      <if test="confIntervalUnit != null">
+        #{confIntervalUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="confInterval != null">
+        #{confInterval,jdbcType=BIGINT},
+      </if>
+      <if test="statusProcessor != null">
+        #{statusProcessor,jdbcType=VARCHAR},
+      </if>
+      <if test="statusLastExeTm != null">
+        #{statusLastExeTm,jdbcType=BIGINT},
+      </if>
+      <if test="statusRunedTime != null">
+        #{statusRunedTime,jdbcType=BIGINT},
+      </if>
+      <if test="processing != null">
+        #{processing,jdbcType=CHAR},
+      </if>
+      <if test="executing != null">
+        #{executing,jdbcType=CHAR},
+      </if>
+      <if test="serviceName != null">
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jason798.timing.domain.gen.GenTaskExample" resultType="java.lang.Long">
+    select count(*) from ts_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ts_task
+    <set>
+      <if test="record.tid != null">
+        TID = #{record.tid,jdbcType=BIGINT},
+      </if>
+      <if test="record.tkey != null">
+        TKEY = #{record.tkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confType != null">
+        CONF_TYPE = #{record.confType,jdbcType=CHAR},
+      </if>
+      <if test="record.confStartTm != null">
+        CONF_START_TM = #{record.confStartTm,jdbcType=BIGINT},
+      </if>
+      <if test="record.confExeTimes != null">
+        CONF_EXE_TIMES = #{record.confExeTimes,jdbcType=BIGINT},
+      </if>
+      <if test="record.confIntervalUnit != null">
+        CONF_INTERVAL_UNIT = #{record.confIntervalUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confInterval != null">
+        CONF_INTERVAL = #{record.confInterval,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusProcessor != null">
+        STATUS_PROCESSOR = #{record.statusProcessor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusLastExeTm != null">
+        STATUS_LAST_EXE_TM = #{record.statusLastExeTm,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusRunedTime != null">
+        STATUS_RUNED_TIME = #{record.statusRunedTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.processing != null">
+        PROCESSING = #{record.processing,jdbcType=CHAR},
+      </if>
+      <if test="record.executing != null">
+        EXECUTING = #{record.executing,jdbcType=CHAR},
+      </if>
+      <if test="record.serviceName != null">
+        SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null">
+        VALID = #{record.valid,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ts_task
+    set TID = #{record.tid,jdbcType=BIGINT},
+      TKEY = #{record.tkey,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      CONF_TYPE = #{record.confType,jdbcType=CHAR},
+      CONF_START_TM = #{record.confStartTm,jdbcType=BIGINT},
+      CONF_EXE_TIMES = #{record.confExeTimes,jdbcType=BIGINT},
+      CONF_INTERVAL_UNIT = #{record.confIntervalUnit,jdbcType=VARCHAR},
+      CONF_INTERVAL = #{record.confInterval,jdbcType=BIGINT},
+      STATUS_PROCESSOR = #{record.statusProcessor,jdbcType=VARCHAR},
+      STATUS_LAST_EXE_TM = #{record.statusLastExeTm,jdbcType=BIGINT},
+      STATUS_RUNED_TIME = #{record.statusRunedTime,jdbcType=BIGINT},
+      PROCESSING = #{record.processing,jdbcType=CHAR},
+      EXECUTING = #{record.executing,jdbcType=CHAR},
+      SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+      VALID = #{record.valid,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jason798.timing.domain.gen.GenTask">
+    update ts_task
+    <set>
+      <if test="tkey != null">
+        TKEY = #{tkey,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="confType != null">
+        CONF_TYPE = #{confType,jdbcType=CHAR},
+      </if>
+      <if test="confStartTm != null">
+        CONF_START_TM = #{confStartTm,jdbcType=BIGINT},
+      </if>
+      <if test="confExeTimes != null">
+        CONF_EXE_TIMES = #{confExeTimes,jdbcType=BIGINT},
+      </if>
+      <if test="confIntervalUnit != null">
+        CONF_INTERVAL_UNIT = #{confIntervalUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="confInterval != null">
+        CONF_INTERVAL = #{confInterval,jdbcType=BIGINT},
+      </if>
+      <if test="statusProcessor != null">
+        STATUS_PROCESSOR = #{statusProcessor,jdbcType=VARCHAR},
+      </if>
+      <if test="statusLastExeTm != null">
+        STATUS_LAST_EXE_TM = #{statusLastExeTm,jdbcType=BIGINT},
+      </if>
+      <if test="statusRunedTime != null">
+        STATUS_RUNED_TIME = #{statusRunedTime,jdbcType=BIGINT},
+      </if>
+      <if test="processing != null">
+        PROCESSING = #{processing,jdbcType=CHAR},
+      </if>
+      <if test="executing != null">
+        EXECUTING = #{executing,jdbcType=CHAR},
+      </if>
+      <if test="serviceName != null">
+        SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        VALID = #{valid,jdbcType=CHAR},
+      </if>
+    </set>
+    where TID = #{tid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jason798.timing.domain.gen.GenTask">
+    update ts_task
+    set TKEY = #{tkey,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      CONF_TYPE = #{confType,jdbcType=CHAR},
+      CONF_START_TM = #{confStartTm,jdbcType=BIGINT},
+      CONF_EXE_TIMES = #{confExeTimes,jdbcType=BIGINT},
+      CONF_INTERVAL_UNIT = #{confIntervalUnit,jdbcType=VARCHAR},
+      CONF_INTERVAL = #{confInterval,jdbcType=BIGINT},
+      STATUS_PROCESSOR = #{statusProcessor,jdbcType=VARCHAR},
+      STATUS_LAST_EXE_TM = #{statusLastExeTm,jdbcType=BIGINT},
+      STATUS_RUNED_TIME = #{statusRunedTime,jdbcType=BIGINT},
+      PROCESSING = #{processing,jdbcType=CHAR},
+      EXECUTING = #{executing,jdbcType=CHAR},
+      SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      VALID = #{valid,jdbcType=CHAR}
+    where TID = #{tid,jdbcType=BIGINT}
+  </update>
+</mapper>
