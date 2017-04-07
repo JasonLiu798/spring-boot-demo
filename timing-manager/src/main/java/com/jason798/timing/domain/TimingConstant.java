@@ -9,13 +9,20 @@ import java.util.Set;
  * @author JasonLiu
  */
 public class TimingConstant {
-	/**
-	 * ################ innser task id #########################
-	 */
-    public static final String MONITOR_THREAD_ID = "MONITOR";
-	public static final String SCHEDULE_THREAD_ID = "SCHEDULE";
-	
-	
+
+    /**
+     * ##################### default value ########################
+     */
+    /**
+     * default task max run time
+     */
+    public static final Long DFT_MAX_RUN_TIME =  10L;
+
+    /**
+     * monitor
+     */
+    public static final Long MONITOR_THREAD_ID = -1L;
+
     /**
      * thread pool dft size
      */
@@ -27,25 +34,41 @@ public class TimingConstant {
      */
     public static final long DFT_MONITOR_RATE = 1000;
     public static final long DFT_MONITOR_DELAY = 1000;
-	
-	/**
-	 * task is valid
-	 */
-	public static final String VALID = "Y";
-	
 
     /**
-     * specified time and specified interval
-     * in use
-     *
-     * 1.unit is year,month
-     * use scheduleWithFixedDelay,calc next exe time ,reput to pool
-     *
-     * 2.unit is day,week,minute,second
-     * use scheduleAtFixedRate,
-     * delay (tgtTm - now)-> do (check 次数->stop) -> delay(tgtTm - now) -> do ....
+     * #################### time associate #####################
      */
-    public static final String TP_TM_INTERVAL = "TV";
+    /**
+     * not alive interval,unit second
+     */
+    public static final Long NOT_ALIVE_INTERVAL = 10*60L+5L;
+
+    /**
+     * mutex interval
+     */
+    public static final Long MUTEX_INTERVAL = 10L;
+
+    /**
+     * task status
+     * Free,Iinitial,Waiting,Executing,enD
+     * F->I->W->E->D/W
+     */
+    public static final String STATUS_FREE = "F";//free,no processor
+    public static final String STATUS_INITIAL = "I";//starting
+    public static final String STATUS_WAITING = "W";//waiting
+    public static final String STATUS_EXECUTING = "E";//executing
+    public static final String STATUS_END = "D";//end
+
+    /**
+     * starting
+     */
+    public static final String COL_MUTEX = "MUTEX";
+    public static final String COL_MUTEX_TM = "MUTEX_TM";
+
+    /**
+     * cron expression task
+     */
+    public static final String TP_CRON = "CR";
 
     /**
      * specified time and specified interval,execute until condition reach or reach the target num
@@ -54,7 +77,8 @@ public class TimingConstant {
      *                                     -> check reach max time yes -> stop
      *                        -> check no  -> stop
      */
-    public static final String TP_COND_INTERVAL = "CV";
+    public static final String TP_COND_INTERVAL_MAX_TIME = "CVN";
+
 
     /**
      *
@@ -74,22 +98,38 @@ public class TimingConstant {
      * init task type
      */
     static {
-        TP_SET.add(TP_TM_INTERVAL);
-        TP_SET.add(TP_COND_INTERVAL);
+        TP_SET.add(TP_CRON);
+        TP_SET.add(TP_COND_INTERVAL_MAX_TIME);
 
     }
 
+    /**
+     * is valid task type
+     * @param tp
+     * @return
+     */
+    public static boolean validTp(String tp){
+        return TP_SET.contains(tp);
+    }
+
+
+    /**
+     * specified time and specified interval
+     * in use
+     *
+     * 1.unit is year,month
+     * use scheduleWithFixedDelay,calc next exe time ,reput to pool
+     *
+     * 2.unit is day,week,minute,second
+     * use scheduleAtFixedRate,
+     * delay (tgtTm - now)-> do (check 次数->stop) -> delay(tgtTm - now) -> do ....
+     */
+    public static final String TP_TM_INTERVAL = "TV";
 
     /**
      * specified time run once
      */
     public static final String TP_TM = "T";
-
-
-    public static boolean validTp(String tp){
-        return TP_SET.contains(tp);
-    }
-
 
     /**
      * fix rate

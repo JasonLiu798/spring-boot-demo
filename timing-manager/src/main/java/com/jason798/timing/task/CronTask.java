@@ -1,11 +1,14 @@
 package com.jason798.timing.task;
 
 import com.jason798.common.DateUtil;
-import com.jason798.log.LogClient;
+import com.jason798.timing.TimingCoreHelper;
 import com.jason798.timing.api.ITimingTask;
 import com.jason798.timing.domain.CronExpression;
 import com.jason798.timing.domain.TaskEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -13,17 +16,18 @@ import java.util.Date;
  *
  * @author JasonLiu
  */
-public class CronTask extends DelayTask {
+public class CronTask extends FixRateTask {
+    private static Logger LOG = LoggerFactory.getLogger(CronTask.class);
 
-    protected boolean runned = false;
-    
+    /**
+     * cron expression
+     */
     private CronExpression cronExpression;
 
-    public CronTask(String tid, ITimingTask service,CronExpression e) {
-        super(tid);
+    public CronTask(Long tid, TimingCoreHelper helper, ITimingTask service, String cronExpressionStr) throws ParseException {
+        super(tid, helper, service);
         this.type = TaskEnum.CRON;
-        this.service = service;
-        this.cronExpression = e;
+        this.cronExpression = new CronExpression(cronExpressionStr);
     }
 
     @Override
@@ -32,34 +36,46 @@ public class CronTask extends DelayTask {
     }
 
     @Override
-    public void run() {
-        before();
-        try {
-            service.execute();
-        }catch (Exception e){
-            LogClient.writeError(CronTask.class,"cron task execute error",e);
-        }
-		runned = true;
-        after();
+    public void execute() {
+        service.execute();
     }
 
-    @Override
-    public void after(){
-        super.after();
-        
+    /**
+     * calc cron expression next run time
+     * todo: if execute time overlaps the next run time
+     *
+     * @return
+     */
+    public Long cron2delay() {
         Date now = new Date();
-		Date next = cronExpression.getNextValidTimeAfter(now);
-		
-		//removeStatus();
-		DateUtil.getIntervalSec(now,next);
-		timingCoreHelper.submitDelayTask(service,this.delayTime);
-        
+        Date next = cronExpression.getNextValidTimeAfter(now);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("cron2delay now {},next {}", now, next);
+        }
+        return DateUtil.getIntervalMs(now, next);
     }
 
-    
-    
+    /**
+     * reput task to shedual pool
+     */
+    @Override
+    public void after() {
+        super.after();
+        this.delayTime = cron2delay();
+        LOG.debug("cron task next delay {}", this.delayTime);
+        boolean res = timingCoreHelper.reSubmitCronTask(this);
+        LOG.debug("cron task reput res {}", res);
+    }
+
 
     /**
      * ############## getter & setter #################
      */
+    public CronExpression getCronExpression() {
+        return cronExpression;
+    }
+
+    public void setCronExpression(CronExpression cronExpression) {
+        this.cronExpression = cronExpression;
+    }
 }

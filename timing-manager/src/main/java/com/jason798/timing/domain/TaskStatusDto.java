@@ -8,7 +8,9 @@ import java.io.Serializable;
  * @author JasonLiu
  */
 public class TaskStatusDto implements Serializable {
-    private String taskId;
+    private Long tid;
+    private String tkey;
+
     private String type;
 
     private String lastStartTm;
@@ -16,19 +18,62 @@ public class TaskStatusDto implements Serializable {
 
     private long startStopInterval;
     private Boolean runned;
+
+    /**
+     * runned counter,for fix rate and cron
+     */
+    private Long runnedCounter;
+
+    private Long maxRunCount;
+
+    /**
+     * is running
+     */
     private boolean running;
+
+    /**
+     * delay
+     */
     private long delay;
+    /**
+     * interval
+     */
     private long interval;
+    /**
+     * cond status
+     */
+    private Boolean cond;
+
 
     public TaskStatusDto(){
     }
 
-    public String getTaskId() {
-        return taskId;
+    public Long getMaxRunCount() {
+        return maxRunCount;
     }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
+    public void setMaxRunCount(Long maxRunCount) {
+        this.maxRunCount = maxRunCount;
+    }
+
+    public Boolean getCond() {
+        return cond;
+    }
+
+    public void setCond(Boolean cond) {
+        this.cond = cond;
+    }
+
+    public Boolean getRunned() {
+        return runned;
+    }
+
+    public Long getRunnedCounter() {
+        return runnedCounter;
+    }
+
+    public void setRunnedCounter(Long runnedCounter) {
+        this.runnedCounter = runnedCounter;
     }
 
     public String getType() {
@@ -61,6 +106,22 @@ public class TaskStatusDto implements Serializable {
 
     public void setStartStopInterval(long startStopInterval) {
         this.startStopInterval = startStopInterval;
+    }
+
+    public Long getTid() {
+        return tid;
+    }
+
+    public void setTid(Long tid) {
+        this.tid = tid;
+    }
+
+    public String getTkey() {
+        return tkey;
+    }
+
+    public void setTkey(String tkey) {
+        this.tkey = tkey;
     }
 
     public Boolean isRunned() {

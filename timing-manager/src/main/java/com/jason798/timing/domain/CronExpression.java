@@ -956,7 +956,7 @@ public final class CronExpression implements Serializable, Cloneable {
 
     protected void addToSet(int val, int end, int incr, int type)
         throws ParseException {
-        
+
         TreeSet<Integer> set = getSet(type);
 
         if (type == SECOND || type == MINUTE) {
@@ -995,7 +995,7 @@ public final class CronExpression implements Serializable, Cloneable {
             } else {
                 set.add(NO_SPEC);
             }
-            
+
             return;
         }
 
@@ -1120,7 +1120,7 @@ public final class CronExpression implements Serializable, Cloneable {
             c = s.charAt(i);
         }
         ValueSet val = new ValueSet();
-        
+
         val.pos = (i < s.length()) ? i : i + 1;
         val.value = Integer.parseInt(s1.toString());
         return val;
@@ -1580,7 +1580,7 @@ public final class CronExpression implements Serializable, Cloneable {
      * NOT YET IMPLEMENTED: Returns the time before the given time
      * that the <code>CronExpression</code> matches.
      */ 
-    public Date getTimeBefore(Date endTime) { 
+    public Date getTimeBefore(Date endTime) {
         // FUTURE_TODO: implement QUARTZ-423
         return null;
     }

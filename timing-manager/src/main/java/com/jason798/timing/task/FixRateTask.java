@@ -1,7 +1,7 @@
 package com.jason798.timing.task;
 
 
-import com.jason798.log.LogClient;
+import com.jason798.timing.TimingCoreHelper;
 import com.jason798.timing.api.ITimingTask;
 import com.jason798.timing.domain.TaskEnum;
 
@@ -12,25 +12,20 @@ import com.jason798.timing.domain.TaskEnum;
  */
 public class FixRateTask extends BaseTask {
     /**
-     * fix rate interval
+     * business obj
      */
-    protected long interval;
+    protected ITimingTask service;
 
-    public FixRateTask(String tid){
-        super(tid);
+    public FixRateTask(Long tid, TimingCoreHelper helper){
+        super(tid,helper);
         this.type = TaskEnum.FIXRATE;
     }
 
-    public FixRateTask(String tid, ITimingTask service) {
-        super(tid);
+    public FixRateTask(Long tid, TimingCoreHelper helper, ITimingTask service) {
+        super(tid,helper);
         this.type = TaskEnum.FIXRATE;
         this.service = service;
     }
-
-    /**
-     * buz obj
-     */
-    private ITimingTask service;
 
     @Override
     public void before() {
@@ -38,14 +33,8 @@ public class FixRateTask extends BaseTask {
     }
 
     @Override
-    public void run() {
-        before();
-        try {
-            service.execute();
-        } catch (Exception e) {
-            LogClient.writeError(FixRateTask.class,"timing task run exception", e);
-        }
-        after();
+    public void execute() {
+        service.execute();
     }
 
     @Override
@@ -70,5 +59,11 @@ public class FixRateTask extends BaseTask {
 
     public void setService(ITimingTask service) {
         this.service = service;
+    }
+    public Long getRunnedCounter() {
+        return runnedCounter;
+    }
+    public void setRunnedCounter(Long runnedCounter) {
+        this.runnedCounter = runnedCounter;
     }
 }

@@ -1,5 +1,7 @@
 package com.jason798.timing.task;
 
+
+import com.jason798.log.LogClient;
 import com.jason798.timing.TimingContext;
 import com.jason798.timing.TimingCoreHelper;
 import com.jason798.timing.domain.TaskEnum;
@@ -13,21 +15,16 @@ import java.util.concurrent.ScheduledFuture;
  */
 public abstract class BaseTask implements Runnable {
     /**
-     * constructor
-     *
-     * @param tid
-     */
-    public BaseTask(String tid) {
-        this.tid = tid;
-    }
-
-    /**
      * ################# basis ##################
      */
     /**
-     * task unique id
+     * task db pk
      */
-    protected String tid;
+    protected Long tid;
+    /**
+     * task key
+     */
+    protected String key;
     /**
      * task type
      */
@@ -36,10 +33,10 @@ public abstract class BaseTask implements Runnable {
      * for cancel
      */
     protected ScheduledFuture future;
-	/**
-	 * core helper class
-	 */
-	protected TimingCoreHelper timingCoreHelper;
+    /**
+     * timing core helper
+     */
+    protected TimingCoreHelper timingCoreHelper;
 
     /**
      * ################ timing #####################
@@ -48,6 +45,10 @@ public abstract class BaseTask implements Runnable {
      * first delay time
      */
     protected long delayTime = 0;
+    /**
+     * interval time
+     */
+    protected long interval = 0;
 
     /**
      * ############### status #####################
@@ -68,7 +69,33 @@ public abstract class BaseTask implements Runnable {
      * submit to pool time
      */
     protected long submitTm = 0;
+    /**
+     * runed counter
+     */
+    protected Long runnedCounter=0L;
+    /**
+     * last run success
+     */
+    protected boolean lastExeSucc = true;
+    /**
+     * is persist to db
+     * inner thread not persist
+     */
+    protected boolean persist = true;
+    /**
+     * is totally end
+     */
+    protected boolean end = false;
 
+    /**
+     * constructor
+     *
+     * @param tid
+     */
+    public BaseTask(Long tid, TimingCoreHelper helper) {
+        this.tid = tid;
+        this.timingCoreHelper = helper;
+    }
 
     /**
      * run before
@@ -77,12 +104,25 @@ public abstract class BaseTask implements Runnable {
     public void before() {
         running = true;
         lastStartTime = System.currentTimeMillis();
+        lastExeSucc = true;
     }
+
+    abstract public void execute();
 
     /**
      * for runnable
      */
-    abstract public void run();
+    @Override
+    public void run(){
+        before();
+        try {
+            execute();
+        } catch (Exception e) {
+            LogClient.writeError(BaseTask.class, "task execute error", e);
+            lastExeSucc = false;
+        }
+        after();
+    }
 
     /**
      * run after
@@ -90,6 +130,11 @@ public abstract class BaseTask implements Runnable {
     public void after() {
         lastStopTime = System.currentTimeMillis();
         running = false;
+        runnedCounter++;
+        if(persist) {
+            timingCoreHelper.saveHistory(this);//persist history
+        }
+        System.out.println("basetask after "+tid);
     }
 
     /**
@@ -111,12 +156,20 @@ public abstract class BaseTask implements Runnable {
         this.running = running;
     }
 
-    public String getTid() {
+    public Long getTid() {
         return tid;
     }
 
-    public void setTid(String tid) {
+    public void setTid(Long tid) {
         this.tid = tid;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public TaskEnum getType() {
@@ -155,12 +208,60 @@ public abstract class BaseTask implements Runnable {
         return future;
     }
 
+    public boolean isLastExeSucc() {
+        return lastExeSucc;
+    }
+
+    public void setLastExeSucc(boolean lastExeSucc) {
+        this.lastExeSucc = lastExeSucc;
+    }
+
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
+
     public long getSubmitTm() {
         return submitTm;
     }
 
     public void setSubmitTm(long submitTm) {
         this.submitTm = submitTm;
+    }
+
+    public TimingCoreHelper getTimingCoreHelper() {
+        return timingCoreHelper;
+    }
+
+    public void setTimingCoreHelper(TimingCoreHelper timingCoreHelper) {
+        this.timingCoreHelper = timingCoreHelper;
+    }
+
+    public Long getRunnedCounter() {
+        return runnedCounter;
+    }
+
+    public void setRunnedCounter(Long runnedCounter) {
+        this.runnedCounter = runnedCounter;
+    }
+
+    public long getInterval() {
+        return interval;
+    }
+
+    public void setInterval(long interval) {
+        this.interval = interval;
+    }
+
+    public boolean isPersist() {
+        return persist;
+    }
+
+    public void setPersist(boolean persist) {
+        this.persist = persist;
     }
 
     public void setFuture(ScheduledFuture future) {

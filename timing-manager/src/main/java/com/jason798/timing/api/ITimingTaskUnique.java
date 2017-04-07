@@ -5,9 +5,11 @@ package com.jason798.timing.api;
  *
  * @author JasonLiu
  */
-public interface ITimingTask {
+public interface ITimingTaskUnique extends ITimingTask {
     /**
-     * business
+     * unique key
+     *
+     * @return
      */
-    void execute();
+    String getKey();
 }

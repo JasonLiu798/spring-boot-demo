@@ -1,8 +1,7 @@
 package com.jason798.timing.task;
 
 
-import com.jason798.log.LogClient;
-import com.jason798.timing.TimingContext;
+import com.jason798.timing.TimingCoreHelper;
 import com.jason798.timing.api.ITimingTaskCond;
 import com.jason798.timing.domain.TaskEnum;
 
@@ -11,16 +10,13 @@ import com.jason798.timing.domain.TaskEnum;
  *
  * @author JasonLiu
  */
-public class FixRateCondTask extends FixRateTask {
-    /**
-     * runed counter
-     */
-    protected int runedCnt = 0;
+public class FixRateCondTask extends FixRateCntTask {
 
-    public FixRateCondTask(String tid, ITimingTaskCond service) {
-        super(tid);
+    public FixRateCondTask(Long tid, TimingCoreHelper helper, ITimingTaskCond service, Long maxTime) {
+        super(tid,helper);
         this.type = TaskEnum.FIXRATECOND;
         this.service = service;
+        this.maxTime = maxTime;
     }
 
     /**
@@ -34,14 +30,8 @@ public class FixRateCondTask extends FixRateTask {
     }
 
     @Override
-    public void run() {
-        before();
-        try {
-            service.execute();
-        } catch (Exception e) {
-            LogClient.writeError(FixRateCondTask.class,"timing task run exception", e);
-        }
-        after();
+    public void execute() {
+        service.execute();
     }
 
     /**
@@ -49,25 +39,26 @@ public class FixRateCondTask extends FixRateTask {
      */
     @Override
     public void after() {
-        runedCnt++;
+        System.out.println("FixRateCondTask after bf");
         super.after();
-        if(service.cond()){
-            removeStatus();
-            TimingContext.cancleTask(tid);
+        System.out.println("FixRateCondTask after af");
+        if(!this.end) {
+            if (service.cond()) {
+                removeStatus();
+                timingCoreHelper.cancelTask(tid);
+                this.end = true;
+            }
         }
+        //LOG.de
+    }
+
+    public boolean getCond(){
+        return service.cond();
     }
 
     /**
      * ################## getter & setter ################################
      */
-    public int getRunedCnt() {
-        return runedCnt;
-    }
-
-    public void setRunedCnt(int runedCnt) {
-        this.runedCnt = runedCnt;
-    }
-
     public ITimingTaskCond getService() {
         return service;
     }

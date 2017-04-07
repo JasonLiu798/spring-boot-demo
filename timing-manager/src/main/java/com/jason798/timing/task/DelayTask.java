@@ -1,6 +1,7 @@
 package com.jason798.timing.task;
 
-import com.jason798.log.LogClient;
+
+import com.jason798.timing.TimingCoreHelper;
 import com.jason798.timing.api.ITimingTask;
 import com.jason798.timing.domain.TaskEnum;
 
@@ -14,15 +15,12 @@ public class DelayTask extends BaseTask {
     protected ITimingTask service;
 
     protected boolean runned = false;
-	
-	public DelayTask(String tid) {
-		super(tid);
-		this.tid =tid;
-		this.type = TaskEnum.DELAY;
-	}
-	
-    public DelayTask(String tid, ITimingTask service) {
-        super(tid);
+
+    public DelayTask(Long tid, TimingCoreHelper helper) {
+        super(tid,helper);
+    }
+    public DelayTask(Long tid, TimingCoreHelper helper, ITimingTask service) {
+        super(tid,helper);
         this.type = TaskEnum.DELAY;
         this.service = service;
     }
@@ -33,19 +31,14 @@ public class DelayTask extends BaseTask {
     }
 
     @Override
-    public void run() {
-        before();
-        try {
-            service.execute();
-        }catch (Exception e){
-            LogClient.writeError(DelayTask.class,"delay task execute error",e);
-        }
-        after();
-        runned = true;
+    public void execute() {
+        service.execute();
     }
 
     @Override
     public void after(){
+        runned = true;
+        runnedCounter++;
         super.after();
         removeStatus();
     }
