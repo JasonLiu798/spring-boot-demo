@@ -4,11 +4,13 @@
   <resultMap id="BaseResultMap" type="com.jason798.timing.domain.gen.GenTaskHistory">
     <id column="htid" jdbcType="BIGINT" property="htid" />
     <result column="tid" jdbcType="BIGINT" property="tid" />
-    <result column="MANAGER" jdbcType="VARCHAR" property="manager" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="PROCESSOR" jdbcType="VARCHAR" property="processor" />
     <result column="THREAD" jdbcType="VARCHAR" property="thread" />
     <result column="START_TM" jdbcType="BIGINT" property="startTm" />
     <result column="END_TM" jdbcType="BIGINT" property="endTm" />
     <result column="EXE_STATUS" jdbcType="CHAR" property="exeStatus" />
+    <result column="EXE_CNT" jdbcType="BIGINT" property="exeCnt" />
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -70,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    htid, tid, MANAGER, THREAD, START_TM, END_TM, EXE_STATUS, MEMO
+    htid, tid, TYPE, PROCESSOR, THREAD, START_TM, END_TM, EXE_STATUS, EXE_CNT, MEMO
   </sql>
   <select id="selectByExample" parameterType="com.jason798.timing.domain.gen.GenTaskHistoryExample" resultMap="BaseResultMap">
     select
@@ -93,12 +95,14 @@
     where htid = #{htid,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.jason798.timing.domain.gen.GenTaskHistory">
-    insert into ts_task_history (htid, tid, MANAGER, 
-      THREAD, START_TM, END_TM, 
-      EXE_STATUS, MEMO)
-    values (#{htid,jdbcType=BIGINT}, #{tid,jdbcType=BIGINT}, #{manager,jdbcType=VARCHAR}, 
-      #{thread,jdbcType=VARCHAR}, #{startTm,jdbcType=BIGINT}, #{endTm,jdbcType=BIGINT}, 
-      #{exeStatus,jdbcType=CHAR}, #{memo,jdbcType=VARCHAR})
+    insert into ts_task_history (htid, tid, TYPE, 
+      PROCESSOR, THREAD, START_TM, 
+      END_TM, EXE_STATUS, EXE_CNT, 
+      MEMO)
+    values (#{htid,jdbcType=BIGINT}, #{tid,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, 
+      #{processor,jdbcType=VARCHAR}, #{thread,jdbcType=VARCHAR}, #{startTm,jdbcType=BIGINT}, 
+      #{endTm,jdbcType=BIGINT}, #{exeStatus,jdbcType=CHAR}, #{exeCnt,jdbcType=BIGINT}, 
+      #{memo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jason798.timing.domain.gen.GenTaskHistory">
     insert into ts_task_history
@@ -109,8 +113,11 @@
       <if test="tid != null">
         tid,
       </if>
-      <if test="manager != null">
-        MANAGER,
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="processor != null">
+        PROCESSOR,
       </if>
       <if test="thread != null">
         THREAD,
@@ -124,6 +131,9 @@
       <if test="exeStatus != null">
         EXE_STATUS,
       </if>
+      <if test="exeCnt != null">
+        EXE_CNT,
+      </if>
       <if test="memo != null">
         MEMO,
       </if>
@@ -135,8 +145,11 @@
       <if test="tid != null">
         #{tid,jdbcType=BIGINT},
       </if>
-      <if test="manager != null">
-        #{manager,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="processor != null">
+        #{processor,jdbcType=VARCHAR},
       </if>
       <if test="thread != null">
         #{thread,jdbcType=VARCHAR},
@@ -149,6 +162,9 @@
       </if>
       <if test="exeStatus != null">
         #{exeStatus,jdbcType=CHAR},
+      </if>
+      <if test="exeCnt != null">
+        #{exeCnt,jdbcType=BIGINT},
       </if>
       <if test="memo != null">
         #{memo,jdbcType=VARCHAR},
@@ -170,8 +186,11 @@
       <if test="record.tid != null">
         tid = #{record.tid,jdbcType=BIGINT},
       </if>
-      <if test="record.manager != null">
-        MANAGER = #{record.manager,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processor != null">
+        PROCESSOR = #{record.processor,jdbcType=VARCHAR},
       </if>
       <if test="record.thread != null">
         THREAD = #{record.thread,jdbcType=VARCHAR},
@@ -185,6 +204,9 @@
       <if test="record.exeStatus != null">
         EXE_STATUS = #{record.exeStatus,jdbcType=CHAR},
       </if>
+      <if test="record.exeCnt != null">
+        EXE_CNT = #{record.exeCnt,jdbcType=BIGINT},
+      </if>
       <if test="record.memo != null">
         MEMO = #{record.memo,jdbcType=VARCHAR},
       </if>
@@ -197,11 +219,13 @@
     update ts_task_history
     set htid = #{record.htid,jdbcType=BIGINT},
       tid = #{record.tid,jdbcType=BIGINT},
-      MANAGER = #{record.manager,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      PROCESSOR = #{record.processor,jdbcType=VARCHAR},
       THREAD = #{record.thread,jdbcType=VARCHAR},
       START_TM = #{record.startTm,jdbcType=BIGINT},
       END_TM = #{record.endTm,jdbcType=BIGINT},
       EXE_STATUS = #{record.exeStatus,jdbcType=CHAR},
+      EXE_CNT = #{record.exeCnt,jdbcType=BIGINT},
       MEMO = #{record.memo,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -213,8 +237,11 @@
       <if test="tid != null">
         tid = #{tid,jdbcType=BIGINT},
       </if>
-      <if test="manager != null">
-        MANAGER = #{manager,jdbcType=VARCHAR},
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="processor != null">
+        PROCESSOR = #{processor,jdbcType=VARCHAR},
       </if>
       <if test="thread != null">
         THREAD = #{thread,jdbcType=VARCHAR},
@@ -228,6 +255,9 @@
       <if test="exeStatus != null">
         EXE_STATUS = #{exeStatus,jdbcType=CHAR},
       </if>
+      <if test="exeCnt != null">
+        EXE_CNT = #{exeCnt,jdbcType=BIGINT},
+      </if>
       <if test="memo != null">
         MEMO = #{memo,jdbcType=VARCHAR},
       </if>
@@ -237,11 +267,13 @@
   <update id="updateByPrimaryKey" parameterType="com.jason798.timing.domain.gen.GenTaskHistory">
     update ts_task_history
     set tid = #{tid,jdbcType=BIGINT},
-      MANAGER = #{manager,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      PROCESSOR = #{processor,jdbcType=VARCHAR},
       THREAD = #{thread,jdbcType=VARCHAR},
       START_TM = #{startTm,jdbcType=BIGINT},
       END_TM = #{endTm,jdbcType=BIGINT},
       EXE_STATUS = #{exeStatus,jdbcType=CHAR},
+      EXE_CNT = #{exeCnt,jdbcType=BIGINT},
       MEMO = #{memo,jdbcType=VARCHAR}
     where htid = #{htid,jdbcType=BIGINT}
   </update>

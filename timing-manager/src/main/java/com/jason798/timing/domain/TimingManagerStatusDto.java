@@ -1,8 +1,11 @@
 package com.jason798.timing.domain;
 
-import sf.aos.timing.task.*;
-import sf.aos.util.collection.CollectionUtil;
-import sf.aos.util.common.DateUtil;
+
+import com.jason798.collection.CollectionUtil;
+import com.jason798.common.DateUtil;
+import com.jason798.timing.task.BaseTask;
+import com.jason798.timing.task.DelayTask;
+import com.jason798.timing.task.FixRateCondTask;
 
 import java.io.Serializable;
 import java.util.HashMap;

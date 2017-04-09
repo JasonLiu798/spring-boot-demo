@@ -234,6 +234,66 @@ public class GenTaskManagerExample {
             return (Criteria) this;
         }
 
+        public Criteria andAliveTmIsNull() {
+            addCriterion("ALIVE_TM is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmIsNotNull() {
+            addCriterion("ALIVE_TM is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmEqualTo(Long value) {
+            addCriterion("ALIVE_TM =", value, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmNotEqualTo(Long value) {
+            addCriterion("ALIVE_TM <>", value, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmGreaterThan(Long value) {
+            addCriterion("ALIVE_TM >", value, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmGreaterThanOrEqualTo(Long value) {
+            addCriterion("ALIVE_TM >=", value, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmLessThan(Long value) {
+            addCriterion("ALIVE_TM <", value, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmLessThanOrEqualTo(Long value) {
+            addCriterion("ALIVE_TM <=", value, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmIn(List<Long> values) {
+            addCriterion("ALIVE_TM in", values, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmNotIn(List<Long> values) {
+            addCriterion("ALIVE_TM not in", values, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmBetween(Long value1, Long value2) {
+            addCriterion("ALIVE_TM between", value1, value2, "aliveTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andAliveTmNotBetween(Long value1, Long value2) {
+            addCriterion("ALIVE_TM not between", value1, value2, "aliveTm");
+            return (Criteria) this;
+        }
+
         public Criteria andLastUpdateTmIsNull() {
             addCriterion("LAST_UPDATE_TM is null");
             return (Criteria) this;

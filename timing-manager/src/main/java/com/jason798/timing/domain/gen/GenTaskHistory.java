@@ -7,7 +7,9 @@ public class GenTaskHistory implements Serializable {
 
     private Long tid;
 
-    private String manager;
+    private String type;
+
+    private String processor;
 
     private String thread;
 
@@ -16,6 +18,8 @@ public class GenTaskHistory implements Serializable {
     private Long endTm;
 
     private String exeStatus;
+
+    private Long exeCnt;
 
     private String memo;
 
@@ -37,12 +41,20 @@ public class GenTaskHistory implements Serializable {
         this.tid = tid;
     }
 
-    public String getManager() {
-        return manager;
+    public String getType() {
+        return type;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager == null ? null : manager.trim();
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor == null ? null : processor.trim();
     }
 
     public String getThread() {
@@ -75,6 +87,14 @@ public class GenTaskHistory implements Serializable {
 
     public void setExeStatus(String exeStatus) {
         this.exeStatus = exeStatus == null ? null : exeStatus.trim();
+    }
+
+    public Long getExeCnt() {
+        return exeCnt;
+    }
+
+    public void setExeCnt(Long exeCnt) {
+        this.exeCnt = exeCnt;
     }
 
     public String getMemo() {

@@ -1,10 +1,17 @@
 package com.jason798.timing;
 
+import com.jason798.config.ConfigService;
+import com.jason798.json.JSONFastJsonUtil;
+import com.jason798.log.LogClient;
 import com.jason798.timing.api.TimingException;
 import com.jason798.timing.domain.TimingConstant;
+import com.jason798.timing.task.BaseTask;
+import com.jason798.timing.task.FixRateTask;
+import com.jason798.timing.task.MonitorTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 
 import javax.annotation.Resource;
 import java.text.ParseException;
@@ -19,7 +26,7 @@ public class TimingCoreHelper {
     private static Logger LOG = LoggerFactory.getLogger(TimingCoreHelper.class);
 
     @Resource
-    DictService dictService;
+	ConfigService configService;
     @Resource
     TimingTaskHelper timingTaskHelper;
 
@@ -29,9 +36,10 @@ public class TimingCoreHelper {
     public void init() {
         int poolSize = TimingConstant.DFT_POOL_SIZE;
         try {
-            poolSize = dictService.getIntValueByPathKey(TimingConstant.POOL_SIZE_PK, TimingConstant.DFT_POOL_SIZE);
+            poolSize = configService.getIntValueByKey(TimingConstant.POOL_SIZE_PK, TimingConstant.DFT_POOL_SIZE);
         } catch (Exception e) {
             LOG.error("get pool size error,use {}", poolSize);
+            poolSize = TimingConstant.DFT_POOL_SIZE;
         }
         if (!TimingContext.buildTaskPool(poolSize)) {
             throw new TimingException("init pool fail");
@@ -46,9 +54,16 @@ public class TimingCoreHelper {
         FixRateTask task = MonitorTask.build(this);
         if (!submitFixRate(task, task.getDelayTime(), task.getInterval())) {
             LogClient.writeError(TimingCoreHelper.class.getSimpleName(), "monitor thread submit fail");
-        }
+        }else{
+        	if(LOG.isDebugEnabled()){
+        		LOG.debug("submit monitor thread success,{}", JSONFastJsonUtil.objectToJson(task));
+			}
+		}
     }
 
+    public void updateStatus(Long tid,String status){
+    	timingTaskHelper.updateTaskStatus(tid,status);
+	}
 
     public void saveHistory(BaseTask t) {
         timingTaskHelper.saveHistory(t);
@@ -102,16 +117,16 @@ public class TimingCoreHelper {
      * @return
      * @throws ParseException
      */
-    public boolean submitCronTask(Long tid, String key, ITimingTask task, String cronExpression) throws ParseException {
+    public RespDto<Long> submitCronTask(Long tid, String key, ITimingTask task, String cronExpression) throws ParseException {
         if (!validTid(tid)) {
-            return false;
+            return RespDto.buildFail();
         }
         CronTask innerTask = new CronTask(tid, this, task, cronExpression);
         innerTask.setKey(key);
         Long delayMs = innerTask.cron2delay();
         LOG.debug("cron task first delay {}", delayMs);
         submitDelay(innerTask, delayMs, true);
-        return true;
+        return RespDto.buildOkLong(delayMs);
     }
 
 

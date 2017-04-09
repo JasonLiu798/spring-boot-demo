@@ -1,15 +1,9 @@
 package com.jason798.timing;
 
-import com.jason798.log.LogClient;
-import com.jason798.timing.api.ITimingTask;
-import com.jason798.timing.api.ITimingTaskCond;
 import com.jason798.timing.api.TimingManager;
-import com.jason798.timing.domain.TimingConstant;
-import com.jason798.timing.domain.gen.GenTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 
 import javax.annotation.Resource;
 import java.text.ParseException;
@@ -137,7 +131,12 @@ public class TimingManagerImpl implements TimingManager {
         boolean lock = timingTaskHelper.lock(tid);
         if (lock) {
             try {
-                timingCoreHelper.submitCronTask(tid, rawTask.getTkey(), task, rawTask.getConfCronExpression());
+                RespDto<Long> submitRes = timingCoreHelper.submitCronTask(tid, rawTask.getTkey(), task, rawTask.getConfCronExpression());
+                if(submitRes.isSucc()){
+					timingTaskHelper.updateTaskStatus(tid, TimingConstant.STATUS_WAITING);
+				}else{
+                	LogClient.writeError(LogConstant.MODULE_TIMING,"submit cron task fail,tid "+tid);
+				}
             } catch (ParseException e) {
                 LogClient.writeError(LogConstant.MODULE_TIMING, "cron task init fail", e);
                 return;
@@ -148,6 +147,9 @@ public class TimingManagerImpl implements TimingManager {
             return;
         }
     }
+    
+    
+    
 
     /**
      * 测试用 静态方法 方便调用

@@ -234,73 +234,73 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNull() {
-            addCriterion("NAME is null");
+        public Criteria andServiceNameIsNull() {
+            addCriterion("SERVICE_NAME is null");
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNotNull() {
-            addCriterion("NAME is not null");
+        public Criteria andServiceNameIsNotNull() {
+            addCriterion("SERVICE_NAME is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNameEqualTo(String value) {
-            addCriterion("NAME =", value, "name");
+        public Criteria andServiceNameEqualTo(String value) {
+            addCriterion("SERVICE_NAME =", value, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotEqualTo(String value) {
-            addCriterion("NAME <>", value, "name");
+        public Criteria andServiceNameNotEqualTo(String value) {
+            addCriterion("SERVICE_NAME <>", value, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThan(String value) {
-            addCriterion("NAME >", value, "name");
+        public Criteria andServiceNameGreaterThan(String value) {
+            addCriterion("SERVICE_NAME >", value, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThanOrEqualTo(String value) {
-            addCriterion("NAME >=", value, "name");
+        public Criteria andServiceNameGreaterThanOrEqualTo(String value) {
+            addCriterion("SERVICE_NAME >=", value, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThan(String value) {
-            addCriterion("NAME <", value, "name");
+        public Criteria andServiceNameLessThan(String value) {
+            addCriterion("SERVICE_NAME <", value, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThanOrEqualTo(String value) {
-            addCriterion("NAME <=", value, "name");
+        public Criteria andServiceNameLessThanOrEqualTo(String value) {
+            addCriterion("SERVICE_NAME <=", value, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameLike(String value) {
-            addCriterion("NAME like", value, "name");
+        public Criteria andServiceNameLike(String value) {
+            addCriterion("SERVICE_NAME like", value, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLike(String value) {
-            addCriterion("NAME not like", value, "name");
+        public Criteria andServiceNameNotLike(String value) {
+            addCriterion("SERVICE_NAME not like", value, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameIn(List<String> values) {
-            addCriterion("NAME in", values, "name");
+        public Criteria andServiceNameIn(List<String> values) {
+            addCriterion("SERVICE_NAME in", values, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotIn(List<String> values) {
-            addCriterion("NAME not in", values, "name");
+        public Criteria andServiceNameNotIn(List<String> values) {
+            addCriterion("SERVICE_NAME not in", values, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("NAME between", value1, value2, "name");
+        public Criteria andServiceNameBetween(String value1, String value2) {
+            addCriterion("SERVICE_NAME between", value1, value2, "serviceName");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("NAME not between", value1, value2, "name");
+        public Criteria andServiceNameNotBetween(String value1, String value2) {
+            addCriterion("SERVICE_NAME not between", value1, value2, "serviceName");
             return (Criteria) this;
         }
 
@@ -374,63 +374,193 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmIsNull() {
-            addCriterion("CONF_START_TM is null");
+        public Criteria andConfCronExpressionIsNull() {
+            addCriterion("CONF_CRON_EXPRESSION is null");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmIsNotNull() {
-            addCriterion("CONF_START_TM is not null");
+        public Criteria andConfCronExpressionIsNotNull() {
+            addCriterion("CONF_CRON_EXPRESSION is not null");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmEqualTo(Long value) {
-            addCriterion("CONF_START_TM =", value, "confStartTm");
+        public Criteria andConfCronExpressionEqualTo(String value) {
+            addCriterion("CONF_CRON_EXPRESSION =", value, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmNotEqualTo(Long value) {
-            addCriterion("CONF_START_TM <>", value, "confStartTm");
+        public Criteria andConfCronExpressionNotEqualTo(String value) {
+            addCriterion("CONF_CRON_EXPRESSION <>", value, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmGreaterThan(Long value) {
-            addCriterion("CONF_START_TM >", value, "confStartTm");
+        public Criteria andConfCronExpressionGreaterThan(String value) {
+            addCriterion("CONF_CRON_EXPRESSION >", value, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmGreaterThanOrEqualTo(Long value) {
-            addCriterion("CONF_START_TM >=", value, "confStartTm");
+        public Criteria andConfCronExpressionGreaterThanOrEqualTo(String value) {
+            addCriterion("CONF_CRON_EXPRESSION >=", value, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmLessThan(Long value) {
-            addCriterion("CONF_START_TM <", value, "confStartTm");
+        public Criteria andConfCronExpressionLessThan(String value) {
+            addCriterion("CONF_CRON_EXPRESSION <", value, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmLessThanOrEqualTo(Long value) {
-            addCriterion("CONF_START_TM <=", value, "confStartTm");
+        public Criteria andConfCronExpressionLessThanOrEqualTo(String value) {
+            addCriterion("CONF_CRON_EXPRESSION <=", value, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmIn(List<Long> values) {
-            addCriterion("CONF_START_TM in", values, "confStartTm");
+        public Criteria andConfCronExpressionLike(String value) {
+            addCriterion("CONF_CRON_EXPRESSION like", value, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmNotIn(List<Long> values) {
-            addCriterion("CONF_START_TM not in", values, "confStartTm");
+        public Criteria andConfCronExpressionNotLike(String value) {
+            addCriterion("CONF_CRON_EXPRESSION not like", value, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmBetween(Long value1, Long value2) {
-            addCriterion("CONF_START_TM between", value1, value2, "confStartTm");
+        public Criteria andConfCronExpressionIn(List<String> values) {
+            addCriterion("CONF_CRON_EXPRESSION in", values, "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andConfStartTmNotBetween(Long value1, Long value2) {
-            addCriterion("CONF_START_TM not between", value1, value2, "confStartTm");
+        public Criteria andConfCronExpressionNotIn(List<String> values) {
+            addCriterion("CONF_CRON_EXPRESSION not in", values, "confCronExpression");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfCronExpressionBetween(String value1, String value2) {
+            addCriterion("CONF_CRON_EXPRESSION between", value1, value2, "confCronExpression");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfCronExpressionNotBetween(String value1, String value2) {
+            addCriterion("CONF_CRON_EXPRESSION not between", value1, value2, "confCronExpression");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmIsNull() {
+            addCriterion("CONF_DELAY_TM is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmIsNotNull() {
+            addCriterion("CONF_DELAY_TM is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmEqualTo(Long value) {
+            addCriterion("CONF_DELAY_TM =", value, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmNotEqualTo(Long value) {
+            addCriterion("CONF_DELAY_TM <>", value, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmGreaterThan(Long value) {
+            addCriterion("CONF_DELAY_TM >", value, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmGreaterThanOrEqualTo(Long value) {
+            addCriterion("CONF_DELAY_TM >=", value, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmLessThan(Long value) {
+            addCriterion("CONF_DELAY_TM <", value, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmLessThanOrEqualTo(Long value) {
+            addCriterion("CONF_DELAY_TM <=", value, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmIn(List<Long> values) {
+            addCriterion("CONF_DELAY_TM in", values, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmNotIn(List<Long> values) {
+            addCriterion("CONF_DELAY_TM not in", values, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmBetween(Long value1, Long value2) {
+            addCriterion("CONF_DELAY_TM between", value1, value2, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfDelayTmNotBetween(Long value1, Long value2) {
+            addCriterion("CONF_DELAY_TM not between", value1, value2, "confDelayTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmIsNull() {
+            addCriterion("CONF_INTERVAL_TM is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmIsNotNull() {
+            addCriterion("CONF_INTERVAL_TM is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmEqualTo(Long value) {
+            addCriterion("CONF_INTERVAL_TM =", value, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmNotEqualTo(Long value) {
+            addCriterion("CONF_INTERVAL_TM <>", value, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmGreaterThan(Long value) {
+            addCriterion("CONF_INTERVAL_TM >", value, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmGreaterThanOrEqualTo(Long value) {
+            addCriterion("CONF_INTERVAL_TM >=", value, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmLessThan(Long value) {
+            addCriterion("CONF_INTERVAL_TM <", value, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmLessThanOrEqualTo(Long value) {
+            addCriterion("CONF_INTERVAL_TM <=", value, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmIn(List<Long> values) {
+            addCriterion("CONF_INTERVAL_TM in", values, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmNotIn(List<Long> values) {
+            addCriterion("CONF_INTERVAL_TM not in", values, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmBetween(Long value1, Long value2) {
+            addCriterion("CONF_INTERVAL_TM between", value1, value2, "confIntervalTm");
+            return (Criteria) this;
+        }
+
+        public Criteria andConfIntervalTmNotBetween(Long value1, Long value2) {
+            addCriterion("CONF_INTERVAL_TM not between", value1, value2, "confIntervalTm");
             return (Criteria) this;
         }
 
@@ -494,533 +624,403 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitIsNull() {
-            addCriterion("CONF_INTERVAL_UNIT is null");
+        public Criteria andProcessorIsNull() {
+            addCriterion("PROCESSOR is null");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitIsNotNull() {
-            addCriterion("CONF_INTERVAL_UNIT is not null");
+        public Criteria andProcessorIsNotNull() {
+            addCriterion("PROCESSOR is not null");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitEqualTo(String value) {
-            addCriterion("CONF_INTERVAL_UNIT =", value, "confIntervalUnit");
+        public Criteria andProcessorEqualTo(String value) {
+            addCriterion("PROCESSOR =", value, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitNotEqualTo(String value) {
-            addCriterion("CONF_INTERVAL_UNIT <>", value, "confIntervalUnit");
+        public Criteria andProcessorNotEqualTo(String value) {
+            addCriterion("PROCESSOR <>", value, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitGreaterThan(String value) {
-            addCriterion("CONF_INTERVAL_UNIT >", value, "confIntervalUnit");
+        public Criteria andProcessorGreaterThan(String value) {
+            addCriterion("PROCESSOR >", value, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitGreaterThanOrEqualTo(String value) {
-            addCriterion("CONF_INTERVAL_UNIT >=", value, "confIntervalUnit");
+        public Criteria andProcessorGreaterThanOrEqualTo(String value) {
+            addCriterion("PROCESSOR >=", value, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitLessThan(String value) {
-            addCriterion("CONF_INTERVAL_UNIT <", value, "confIntervalUnit");
+        public Criteria andProcessorLessThan(String value) {
+            addCriterion("PROCESSOR <", value, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitLessThanOrEqualTo(String value) {
-            addCriterion("CONF_INTERVAL_UNIT <=", value, "confIntervalUnit");
+        public Criteria andProcessorLessThanOrEqualTo(String value) {
+            addCriterion("PROCESSOR <=", value, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitLike(String value) {
-            addCriterion("CONF_INTERVAL_UNIT like", value, "confIntervalUnit");
+        public Criteria andProcessorLike(String value) {
+            addCriterion("PROCESSOR like", value, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitNotLike(String value) {
-            addCriterion("CONF_INTERVAL_UNIT not like", value, "confIntervalUnit");
+        public Criteria andProcessorNotLike(String value) {
+            addCriterion("PROCESSOR not like", value, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitIn(List<String> values) {
-            addCriterion("CONF_INTERVAL_UNIT in", values, "confIntervalUnit");
+        public Criteria andProcessorIn(List<String> values) {
+            addCriterion("PROCESSOR in", values, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitNotIn(List<String> values) {
-            addCriterion("CONF_INTERVAL_UNIT not in", values, "confIntervalUnit");
+        public Criteria andProcessorNotIn(List<String> values) {
+            addCriterion("PROCESSOR not in", values, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitBetween(String value1, String value2) {
-            addCriterion("CONF_INTERVAL_UNIT between", value1, value2, "confIntervalUnit");
+        public Criteria andProcessorBetween(String value1, String value2) {
+            addCriterion("PROCESSOR between", value1, value2, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitNotBetween(String value1, String value2) {
-            addCriterion("CONF_INTERVAL_UNIT not between", value1, value2, "confIntervalUnit");
+        public Criteria andProcessorNotBetween(String value1, String value2) {
+            addCriterion("PROCESSOR not between", value1, value2, "processor");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalIsNull() {
-            addCriterion("CONF_INTERVAL is null");
+        public Criteria andStatusEndIsNull() {
+            addCriterion("STATUS_END is null");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalIsNotNull() {
-            addCriterion("CONF_INTERVAL is not null");
+        public Criteria andStatusEndIsNotNull() {
+            addCriterion("STATUS_END is not null");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalEqualTo(Long value) {
-            addCriterion("CONF_INTERVAL =", value, "confInterval");
+        public Criteria andStatusEndEqualTo(String value) {
+            addCriterion("STATUS_END =", value, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalNotEqualTo(Long value) {
-            addCriterion("CONF_INTERVAL <>", value, "confInterval");
+        public Criteria andStatusEndNotEqualTo(String value) {
+            addCriterion("STATUS_END <>", value, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalGreaterThan(Long value) {
-            addCriterion("CONF_INTERVAL >", value, "confInterval");
+        public Criteria andStatusEndGreaterThan(String value) {
+            addCriterion("STATUS_END >", value, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalGreaterThanOrEqualTo(Long value) {
-            addCriterion("CONF_INTERVAL >=", value, "confInterval");
+        public Criteria andStatusEndGreaterThanOrEqualTo(String value) {
+            addCriterion("STATUS_END >=", value, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalLessThan(Long value) {
-            addCriterion("CONF_INTERVAL <", value, "confInterval");
+        public Criteria andStatusEndLessThan(String value) {
+            addCriterion("STATUS_END <", value, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalLessThanOrEqualTo(Long value) {
-            addCriterion("CONF_INTERVAL <=", value, "confInterval");
+        public Criteria andStatusEndLessThanOrEqualTo(String value) {
+            addCriterion("STATUS_END <=", value, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalIn(List<Long> values) {
-            addCriterion("CONF_INTERVAL in", values, "confInterval");
+        public Criteria andStatusEndLike(String value) {
+            addCriterion("STATUS_END like", value, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalNotIn(List<Long> values) {
-            addCriterion("CONF_INTERVAL not in", values, "confInterval");
+        public Criteria andStatusEndNotLike(String value) {
+            addCriterion("STATUS_END not like", value, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalBetween(Long value1, Long value2) {
-            addCriterion("CONF_INTERVAL between", value1, value2, "confInterval");
+        public Criteria andStatusEndIn(List<String> values) {
+            addCriterion("STATUS_END in", values, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalNotBetween(Long value1, Long value2) {
-            addCriterion("CONF_INTERVAL not between", value1, value2, "confInterval");
+        public Criteria andStatusEndNotIn(List<String> values) {
+            addCriterion("STATUS_END not in", values, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorIsNull() {
-            addCriterion("STATUS_PROCESSOR is null");
+        public Criteria andStatusEndBetween(String value1, String value2) {
+            addCriterion("STATUS_END between", value1, value2, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorIsNotNull() {
-            addCriterion("STATUS_PROCESSOR is not null");
+        public Criteria andStatusEndNotBetween(String value1, String value2) {
+            addCriterion("STATUS_END not between", value1, value2, "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorEqualTo(String value) {
-            addCriterion("STATUS_PROCESSOR =", value, "statusProcessor");
+        public Criteria andMutexIsNull() {
+            addCriterion("MUTEX is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorNotEqualTo(String value) {
-            addCriterion("STATUS_PROCESSOR <>", value, "statusProcessor");
+        public Criteria andMutexIsNotNull() {
+            addCriterion("MUTEX is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorGreaterThan(String value) {
-            addCriterion("STATUS_PROCESSOR >", value, "statusProcessor");
+        public Criteria andMutexEqualTo(String value) {
+            addCriterion("MUTEX =", value, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorGreaterThanOrEqualTo(String value) {
-            addCriterion("STATUS_PROCESSOR >=", value, "statusProcessor");
+        public Criteria andMutexNotEqualTo(String value) {
+            addCriterion("MUTEX <>", value, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorLessThan(String value) {
-            addCriterion("STATUS_PROCESSOR <", value, "statusProcessor");
+        public Criteria andMutexGreaterThan(String value) {
+            addCriterion("MUTEX >", value, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorLessThanOrEqualTo(String value) {
-            addCriterion("STATUS_PROCESSOR <=", value, "statusProcessor");
+        public Criteria andMutexGreaterThanOrEqualTo(String value) {
+            addCriterion("MUTEX >=", value, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorLike(String value) {
-            addCriterion("STATUS_PROCESSOR like", value, "statusProcessor");
+        public Criteria andMutexLessThan(String value) {
+            addCriterion("MUTEX <", value, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorNotLike(String value) {
-            addCriterion("STATUS_PROCESSOR not like", value, "statusProcessor");
+        public Criteria andMutexLessThanOrEqualTo(String value) {
+            addCriterion("MUTEX <=", value, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorIn(List<String> values) {
-            addCriterion("STATUS_PROCESSOR in", values, "statusProcessor");
+        public Criteria andMutexLike(String value) {
+            addCriterion("MUTEX like", value, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorNotIn(List<String> values) {
-            addCriterion("STATUS_PROCESSOR not in", values, "statusProcessor");
+        public Criteria andMutexNotLike(String value) {
+            addCriterion("MUTEX not like", value, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorBetween(String value1, String value2) {
-            addCriterion("STATUS_PROCESSOR between", value1, value2, "statusProcessor");
+        public Criteria andMutexIn(List<String> values) {
+            addCriterion("MUTEX in", values, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorNotBetween(String value1, String value2) {
-            addCriterion("STATUS_PROCESSOR not between", value1, value2, "statusProcessor");
+        public Criteria andMutexNotIn(List<String> values) {
+            addCriterion("MUTEX not in", values, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmIsNull() {
-            addCriterion("STATUS_LAST_EXE_TM is null");
+        public Criteria andMutexBetween(String value1, String value2) {
+            addCriterion("MUTEX between", value1, value2, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmIsNotNull() {
-            addCriterion("STATUS_LAST_EXE_TM is not null");
+        public Criteria andMutexNotBetween(String value1, String value2) {
+            addCriterion("MUTEX not between", value1, value2, "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmEqualTo(Long value) {
-            addCriterion("STATUS_LAST_EXE_TM =", value, "statusLastExeTm");
+        public Criteria andMutexTmIsNull() {
+            addCriterion("MUTEX_TM is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmNotEqualTo(Long value) {
-            addCriterion("STATUS_LAST_EXE_TM <>", value, "statusLastExeTm");
+        public Criteria andMutexTmIsNotNull() {
+            addCriterion("MUTEX_TM is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmGreaterThan(Long value) {
-            addCriterion("STATUS_LAST_EXE_TM >", value, "statusLastExeTm");
+        public Criteria andMutexTmEqualTo(Long value) {
+            addCriterion("MUTEX_TM =", value, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmGreaterThanOrEqualTo(Long value) {
-            addCriterion("STATUS_LAST_EXE_TM >=", value, "statusLastExeTm");
+        public Criteria andMutexTmNotEqualTo(Long value) {
+            addCriterion("MUTEX_TM <>", value, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmLessThan(Long value) {
-            addCriterion("STATUS_LAST_EXE_TM <", value, "statusLastExeTm");
+        public Criteria andMutexTmGreaterThan(Long value) {
+            addCriterion("MUTEX_TM >", value, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmLessThanOrEqualTo(Long value) {
-            addCriterion("STATUS_LAST_EXE_TM <=", value, "statusLastExeTm");
+        public Criteria andMutexTmGreaterThanOrEqualTo(Long value) {
+            addCriterion("MUTEX_TM >=", value, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmIn(List<Long> values) {
-            addCriterion("STATUS_LAST_EXE_TM in", values, "statusLastExeTm");
+        public Criteria andMutexTmLessThan(Long value) {
+            addCriterion("MUTEX_TM <", value, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmNotIn(List<Long> values) {
-            addCriterion("STATUS_LAST_EXE_TM not in", values, "statusLastExeTm");
+        public Criteria andMutexTmLessThanOrEqualTo(Long value) {
+            addCriterion("MUTEX_TM <=", value, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmBetween(Long value1, Long value2) {
-            addCriterion("STATUS_LAST_EXE_TM between", value1, value2, "statusLastExeTm");
+        public Criteria andMutexTmIn(List<Long> values) {
+            addCriterion("MUTEX_TM in", values, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLastExeTmNotBetween(Long value1, Long value2) {
-            addCriterion("STATUS_LAST_EXE_TM not between", value1, value2, "statusLastExeTm");
+        public Criteria andMutexTmNotIn(List<Long> values) {
+            addCriterion("MUTEX_TM not in", values, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeIsNull() {
-            addCriterion("STATUS_RUNED_TIME is null");
+        public Criteria andMutexTmBetween(Long value1, Long value2) {
+            addCriterion("MUTEX_TM between", value1, value2, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeIsNotNull() {
-            addCriterion("STATUS_RUNED_TIME is not null");
+        public Criteria andMutexTmNotBetween(Long value1, Long value2) {
+            addCriterion("MUTEX_TM not between", value1, value2, "mutexTm");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeEqualTo(Long value) {
-            addCriterion("STATUS_RUNED_TIME =", value, "statusRunedTime");
+        public Criteria andStatusIsNull() {
+            addCriterion("STATUS is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeNotEqualTo(Long value) {
-            addCriterion("STATUS_RUNED_TIME <>", value, "statusRunedTime");
+        public Criteria andStatusIsNotNull() {
+            addCriterion("STATUS is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeGreaterThan(Long value) {
-            addCriterion("STATUS_RUNED_TIME >", value, "statusRunedTime");
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("STATUS =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeGreaterThanOrEqualTo(Long value) {
-            addCriterion("STATUS_RUNED_TIME >=", value, "statusRunedTime");
+        public Criteria andStatusNotEqualTo(String value) {
+            addCriterion("STATUS <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeLessThan(Long value) {
-            addCriterion("STATUS_RUNED_TIME <", value, "statusRunedTime");
+        public Criteria andStatusGreaterThan(String value) {
+            addCriterion("STATUS >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeLessThanOrEqualTo(Long value) {
-            addCriterion("STATUS_RUNED_TIME <=", value, "statusRunedTime");
+        public Criteria andStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("STATUS >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeIn(List<Long> values) {
-            addCriterion("STATUS_RUNED_TIME in", values, "statusRunedTime");
+        public Criteria andStatusLessThan(String value) {
+            addCriterion("STATUS <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeNotIn(List<Long> values) {
-            addCriterion("STATUS_RUNED_TIME not in", values, "statusRunedTime");
+        public Criteria andStatusLessThanOrEqualTo(String value) {
+            addCriterion("STATUS <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeBetween(Long value1, Long value2) {
-            addCriterion("STATUS_RUNED_TIME between", value1, value2, "statusRunedTime");
+        public Criteria andStatusLike(String value) {
+            addCriterion("STATUS like", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusRunedTimeNotBetween(Long value1, Long value2) {
-            addCriterion("STATUS_RUNED_TIME not between", value1, value2, "statusRunedTime");
+        public Criteria andStatusNotLike(String value) {
+            addCriterion("STATUS not like", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingIsNull() {
-            addCriterion("PROCESSING is null");
+        public Criteria andStatusIn(List<String> values) {
+            addCriterion("STATUS in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingIsNotNull() {
-            addCriterion("PROCESSING is not null");
+        public Criteria andStatusNotIn(List<String> values) {
+            addCriterion("STATUS not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingEqualTo(String value) {
-            addCriterion("PROCESSING =", value, "processing");
+        public Criteria andStatusBetween(String value1, String value2) {
+            addCriterion("STATUS between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingNotEqualTo(String value) {
-            addCriterion("PROCESSING <>", value, "processing");
+        public Criteria andStatusNotBetween(String value1, String value2) {
+            addCriterion("STATUS not between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingGreaterThan(String value) {
-            addCriterion("PROCESSING >", value, "processing");
+        public Criteria andAliveTmIsNull() {
+            addCriterion("ALIVE_TM is null");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingGreaterThanOrEqualTo(String value) {
-            addCriterion("PROCESSING >=", value, "processing");
+        public Criteria andAliveTmIsNotNull() {
+            addCriterion("ALIVE_TM is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingLessThan(String value) {
-            addCriterion("PROCESSING <", value, "processing");
+        public Criteria andAliveTmEqualTo(Long value) {
+            addCriterion("ALIVE_TM =", value, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingLessThanOrEqualTo(String value) {
-            addCriterion("PROCESSING <=", value, "processing");
+        public Criteria andAliveTmNotEqualTo(Long value) {
+            addCriterion("ALIVE_TM <>", value, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingLike(String value) {
-            addCriterion("PROCESSING like", value, "processing");
+        public Criteria andAliveTmGreaterThan(Long value) {
+            addCriterion("ALIVE_TM >", value, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingNotLike(String value) {
-            addCriterion("PROCESSING not like", value, "processing");
+        public Criteria andAliveTmGreaterThanOrEqualTo(Long value) {
+            addCriterion("ALIVE_TM >=", value, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingIn(List<String> values) {
-            addCriterion("PROCESSING in", values, "processing");
+        public Criteria andAliveTmLessThan(Long value) {
+            addCriterion("ALIVE_TM <", value, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingNotIn(List<String> values) {
-            addCriterion("PROCESSING not in", values, "processing");
+        public Criteria andAliveTmLessThanOrEqualTo(Long value) {
+            addCriterion("ALIVE_TM <=", value, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingBetween(String value1, String value2) {
-            addCriterion("PROCESSING between", value1, value2, "processing");
+        public Criteria andAliveTmIn(List<Long> values) {
+            addCriterion("ALIVE_TM in", values, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingNotBetween(String value1, String value2) {
-            addCriterion("PROCESSING not between", value1, value2, "processing");
+        public Criteria andAliveTmNotIn(List<Long> values) {
+            addCriterion("ALIVE_TM not in", values, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andExecutingIsNull() {
-            addCriterion("EXECUTING is null");
+        public Criteria andAliveTmBetween(Long value1, Long value2) {
+            addCriterion("ALIVE_TM between", value1, value2, "aliveTm");
             return (Criteria) this;
         }
 
-        public Criteria andExecutingIsNotNull() {
-            addCriterion("EXECUTING is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingEqualTo(String value) {
-            addCriterion("EXECUTING =", value, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingNotEqualTo(String value) {
-            addCriterion("EXECUTING <>", value, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingGreaterThan(String value) {
-            addCriterion("EXECUTING >", value, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingGreaterThanOrEqualTo(String value) {
-            addCriterion("EXECUTING >=", value, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingLessThan(String value) {
-            addCriterion("EXECUTING <", value, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingLessThanOrEqualTo(String value) {
-            addCriterion("EXECUTING <=", value, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingLike(String value) {
-            addCriterion("EXECUTING like", value, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingNotLike(String value) {
-            addCriterion("EXECUTING not like", value, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingIn(List<String> values) {
-            addCriterion("EXECUTING in", values, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingNotIn(List<String> values) {
-            addCriterion("EXECUTING not in", values, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingBetween(String value1, String value2) {
-            addCriterion("EXECUTING between", value1, value2, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andExecutingNotBetween(String value1, String value2) {
-            addCriterion("EXECUTING not between", value1, value2, "executing");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameIsNull() {
-            addCriterion("SERVICE_NAME is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameIsNotNull() {
-            addCriterion("SERVICE_NAME is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameEqualTo(String value) {
-            addCriterion("SERVICE_NAME =", value, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameNotEqualTo(String value) {
-            addCriterion("SERVICE_NAME <>", value, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameGreaterThan(String value) {
-            addCriterion("SERVICE_NAME >", value, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameGreaterThanOrEqualTo(String value) {
-            addCriterion("SERVICE_NAME >=", value, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameLessThan(String value) {
-            addCriterion("SERVICE_NAME <", value, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameLessThanOrEqualTo(String value) {
-            addCriterion("SERVICE_NAME <=", value, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameLike(String value) {
-            addCriterion("SERVICE_NAME like", value, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameNotLike(String value) {
-            addCriterion("SERVICE_NAME not like", value, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameIn(List<String> values) {
-            addCriterion("SERVICE_NAME in", values, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameNotIn(List<String> values) {
-            addCriterion("SERVICE_NAME not in", values, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameBetween(String value1, String value2) {
-            addCriterion("SERVICE_NAME between", value1, value2, "serviceName");
-            return (Criteria) this;
-        }
-
-        public Criteria andServiceNameNotBetween(String value1, String value2) {
-            addCriterion("SERVICE_NAME not between", value1, value2, "serviceName");
+        public Criteria andAliveTmNotBetween(Long value1, Long value2) {
+            addCriterion("ALIVE_TM not between", value1, value2, "aliveTm");
             return (Criteria) this;
         }
 
@@ -1099,8 +1099,8 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andNameLikeInsensitive(String value) {
-            addCriterion("upper(NAME) like", value.toUpperCase(), "name");
+        public Criteria andServiceNameLikeInsensitive(String value) {
+            addCriterion("upper(SERVICE_NAME) like", value.toUpperCase(), "serviceName");
             return (Criteria) this;
         }
 
@@ -1109,28 +1109,28 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andConfIntervalUnitLikeInsensitive(String value) {
-            addCriterion("upper(CONF_INTERVAL_UNIT) like", value.toUpperCase(), "confIntervalUnit");
+        public Criteria andConfCronExpressionLikeInsensitive(String value) {
+            addCriterion("upper(CONF_CRON_EXPRESSION) like", value.toUpperCase(), "confCronExpression");
             return (Criteria) this;
         }
 
-        public Criteria andStatusProcessorLikeInsensitive(String value) {
-            addCriterion("upper(STATUS_PROCESSOR) like", value.toUpperCase(), "statusProcessor");
+        public Criteria andProcessorLikeInsensitive(String value) {
+            addCriterion("upper(PROCESSOR) like", value.toUpperCase(), "processor");
             return (Criteria) this;
         }
 
-        public Criteria andProcessingLikeInsensitive(String value) {
-            addCriterion("upper(PROCESSING) like", value.toUpperCase(), "processing");
+        public Criteria andStatusEndLikeInsensitive(String value) {
+            addCriterion("upper(STATUS_END) like", value.toUpperCase(), "statusEnd");
             return (Criteria) this;
         }
 
-        public Criteria andExecutingLikeInsensitive(String value) {
-            addCriterion("upper(EXECUTING) like", value.toUpperCase(), "executing");
+        public Criteria andMutexLikeInsensitive(String value) {
+            addCriterion("upper(MUTEX) like", value.toUpperCase(), "mutex");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameLikeInsensitive(String value) {
-            addCriterion("upper(SERVICE_NAME) like", value.toUpperCase(), "serviceName");
+        public Criteria andStatusLikeInsensitive(String value) {
+            addCriterion("upper(STATUS) like", value.toUpperCase(), "status");
             return (Criteria) this;
         }
 

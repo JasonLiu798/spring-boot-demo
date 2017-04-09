@@ -7,29 +7,29 @@ public class GenTask implements Serializable {
 
     private String tkey;
 
-    private String name;
+    private String serviceName;
 
     private String confType;
 
-    private Long confStartTm;
+    private String confCronExpression;
+
+    private Long confDelayTm;
+
+    private Long confIntervalTm;
 
     private Long confExeTimes;
 
-    private String confIntervalUnit;
+    private String processor;
 
-    private Long confInterval;
+    private String statusEnd;
 
-    private String statusProcessor;
+    private String mutex;
 
-    private Long statusLastExeTm;
+    private Long mutexTm;
 
-    private Long statusRunedTime;
+    private String status;
 
-    private String processing;
-
-    private String executing;
-
-    private String serviceName;
+    private Long aliveTm;
 
     private String valid;
 
@@ -51,12 +51,12 @@ public class GenTask implements Serializable {
         this.tkey = tkey == null ? null : tkey.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName == null ? null : serviceName.trim();
     }
 
     public String getConfType() {
@@ -67,12 +67,28 @@ public class GenTask implements Serializable {
         this.confType = confType == null ? null : confType.trim();
     }
 
-    public Long getConfStartTm() {
-        return confStartTm;
+    public String getConfCronExpression() {
+        return confCronExpression;
     }
 
-    public void setConfStartTm(Long confStartTm) {
-        this.confStartTm = confStartTm;
+    public void setConfCronExpression(String confCronExpression) {
+        this.confCronExpression = confCronExpression == null ? null : confCronExpression.trim();
+    }
+
+    public Long getConfDelayTm() {
+        return confDelayTm;
+    }
+
+    public void setConfDelayTm(Long confDelayTm) {
+        this.confDelayTm = confDelayTm;
+    }
+
+    public Long getConfIntervalTm() {
+        return confIntervalTm;
+    }
+
+    public void setConfIntervalTm(Long confIntervalTm) {
+        this.confIntervalTm = confIntervalTm;
     }
 
     public Long getConfExeTimes() {
@@ -83,68 +99,52 @@ public class GenTask implements Serializable {
         this.confExeTimes = confExeTimes;
     }
 
-    public String getConfIntervalUnit() {
-        return confIntervalUnit;
+    public String getProcessor() {
+        return processor;
     }
 
-    public void setConfIntervalUnit(String confIntervalUnit) {
-        this.confIntervalUnit = confIntervalUnit == null ? null : confIntervalUnit.trim();
+    public void setProcessor(String processor) {
+        this.processor = processor == null ? null : processor.trim();
     }
 
-    public Long getConfInterval() {
-        return confInterval;
+    public String getStatusEnd() {
+        return statusEnd;
     }
 
-    public void setConfInterval(Long confInterval) {
-        this.confInterval = confInterval;
+    public void setStatusEnd(String statusEnd) {
+        this.statusEnd = statusEnd == null ? null : statusEnd.trim();
     }
 
-    public String getStatusProcessor() {
-        return statusProcessor;
+    public String getMutex() {
+        return mutex;
     }
 
-    public void setStatusProcessor(String statusProcessor) {
-        this.statusProcessor = statusProcessor == null ? null : statusProcessor.trim();
+    public void setMutex(String mutex) {
+        this.mutex = mutex == null ? null : mutex.trim();
     }
 
-    public Long getStatusLastExeTm() {
-        return statusLastExeTm;
+    public Long getMutexTm() {
+        return mutexTm;
     }
 
-    public void setStatusLastExeTm(Long statusLastExeTm) {
-        this.statusLastExeTm = statusLastExeTm;
+    public void setMutexTm(Long mutexTm) {
+        this.mutexTm = mutexTm;
     }
 
-    public Long getStatusRunedTime() {
-        return statusRunedTime;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatusRunedTime(Long statusRunedTime) {
-        this.statusRunedTime = statusRunedTime;
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
-    public String getProcessing() {
-        return processing;
+    public Long getAliveTm() {
+        return aliveTm;
     }
 
-    public void setProcessing(String processing) {
-        this.processing = processing == null ? null : processing.trim();
-    }
-
-    public String getExecuting() {
-        return executing;
-    }
-
-    public void setExecuting(String executing) {
-        this.executing = executing == null ? null : executing.trim();
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName == null ? null : serviceName.trim();
+    public void setAliveTm(Long aliveTm) {
+        this.aliveTm = aliveTm;
     }
 
     public String getValid() {

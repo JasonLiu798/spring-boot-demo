@@ -1,6 +1,7 @@
 package com.jason798.timing.task;
 
 
+
 import com.jason798.log.LogClient;
 import com.jason798.timing.TimingContext;
 import com.jason798.timing.TimingCoreHelper;
@@ -102,6 +103,9 @@ public abstract class BaseTask implements Runnable {
      * for sys
      */
     public void before() {
+    	if(persist) {
+			timingCoreHelper.updateStatus(this.tid, TimingConstant.STATUS_EXECUTING);
+		}
         running = true;
         lastStartTime = System.currentTimeMillis();
         lastExeSucc = true;
@@ -122,6 +126,9 @@ public abstract class BaseTask implements Runnable {
             lastExeSucc = false;
         }
         after();
+        if(persist) {
+			afterPersist();
+		}
     }
 
     /**
@@ -131,11 +138,16 @@ public abstract class BaseTask implements Runnable {
         lastStopTime = System.currentTimeMillis();
         running = false;
         runnedCounter++;
-        if(persist) {
-            timingCoreHelper.saveHistory(this);//persist history
-        }
-        System.out.println("basetask after "+tid);
     }
+    
+    public void afterPersist(){
+		timingCoreHelper.saveHistory(this);//persist history
+		if(end) {
+			timingCoreHelper.updateStatus(this.tid, TimingConstant.STATUS_END);
+		}else{
+			timingCoreHelper.updateStatus(this.tid, TimingConstant.STATUS_WAITING);
+		}
+	}
 
     /**
      * remove status

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.jason798.timing.domain.gen.GenTaskManager">
     <id column="MID" jdbcType="BIGINT" property="mid" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="ALIVE_TM" jdbcType="BIGINT" property="aliveTm" />
     <result column="LAST_UPDATE_TM" jdbcType="BIGINT" property="lastUpdateTm" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    MID, NAME, LAST_UPDATE_TM
+    MID, NAME, ALIVE_TM, LAST_UPDATE_TM
   </sql>
   <select id="selectByExample" parameterType="com.jason798.timing.domain.gen.GenTaskManagerExample" resultMap="BaseResultMap">
     select
@@ -88,10 +89,10 @@
     where MID = #{mid,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.jason798.timing.domain.gen.GenTaskManager">
-    insert into ts_task_manager (MID, NAME, LAST_UPDATE_TM
-      )
-    values (#{mid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{lastUpdateTm,jdbcType=BIGINT}
-      )
+    insert into ts_task_manager (MID, NAME, ALIVE_TM, 
+      LAST_UPDATE_TM)
+    values (#{mid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{aliveTm,jdbcType=BIGINT}, 
+      #{lastUpdateTm,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.jason798.timing.domain.gen.GenTaskManager">
     insert into ts_task_manager
@@ -101,6 +102,9 @@
       </if>
       <if test="name != null">
         NAME,
+      </if>
+      <if test="aliveTm != null">
+        ALIVE_TM,
       </if>
       <if test="lastUpdateTm != null">
         LAST_UPDATE_TM,
@@ -112,6 +116,9 @@
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="aliveTm != null">
+        #{aliveTm,jdbcType=BIGINT},
       </if>
       <if test="lastUpdateTm != null">
         #{lastUpdateTm,jdbcType=BIGINT},
@@ -133,6 +140,9 @@
       <if test="record.name != null">
         NAME = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.aliveTm != null">
+        ALIVE_TM = #{record.aliveTm,jdbcType=BIGINT},
+      </if>
       <if test="record.lastUpdateTm != null">
         LAST_UPDATE_TM = #{record.lastUpdateTm,jdbcType=BIGINT},
       </if>
@@ -145,6 +155,7 @@
     update ts_task_manager
     set MID = #{record.mid,jdbcType=BIGINT},
       NAME = #{record.name,jdbcType=VARCHAR},
+      ALIVE_TM = #{record.aliveTm,jdbcType=BIGINT},
       LAST_UPDATE_TM = #{record.lastUpdateTm,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -156,6 +167,9 @@
       <if test="name != null">
         NAME = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="aliveTm != null">
+        ALIVE_TM = #{aliveTm,jdbcType=BIGINT},
+      </if>
       <if test="lastUpdateTm != null">
         LAST_UPDATE_TM = #{lastUpdateTm,jdbcType=BIGINT},
       </if>
@@ -165,6 +179,7 @@
   <update id="updateByPrimaryKey" parameterType="com.jason798.timing.domain.gen.GenTaskManager">
     update ts_task_manager
     set NAME = #{name,jdbcType=VARCHAR},
+      ALIVE_TM = #{aliveTm,jdbcType=BIGINT},
       LAST_UPDATE_TM = #{lastUpdateTm,jdbcType=BIGINT}
     where MID = #{mid,jdbcType=BIGINT}
   </update>

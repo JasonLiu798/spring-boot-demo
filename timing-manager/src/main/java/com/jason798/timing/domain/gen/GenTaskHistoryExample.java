@@ -224,73 +224,143 @@ public class GenTaskHistoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andManagerIsNull() {
-            addCriterion("MANAGER is null");
+        public Criteria andTypeIsNull() {
+            addCriterion("TYPE is null");
             return (Criteria) this;
         }
 
-        public Criteria andManagerIsNotNull() {
-            addCriterion("MANAGER is not null");
+        public Criteria andTypeIsNotNull() {
+            addCriterion("TYPE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andManagerEqualTo(String value) {
-            addCriterion("MANAGER =", value, "manager");
+        public Criteria andTypeEqualTo(String value) {
+            addCriterion("TYPE =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerNotEqualTo(String value) {
-            addCriterion("MANAGER <>", value, "manager");
+        public Criteria andTypeNotEqualTo(String value) {
+            addCriterion("TYPE <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerGreaterThan(String value) {
-            addCriterion("MANAGER >", value, "manager");
+        public Criteria andTypeGreaterThan(String value) {
+            addCriterion("TYPE >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerGreaterThanOrEqualTo(String value) {
-            addCriterion("MANAGER >=", value, "manager");
+        public Criteria andTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("TYPE >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerLessThan(String value) {
-            addCriterion("MANAGER <", value, "manager");
+        public Criteria andTypeLessThan(String value) {
+            addCriterion("TYPE <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerLessThanOrEqualTo(String value) {
-            addCriterion("MANAGER <=", value, "manager");
+        public Criteria andTypeLessThanOrEqualTo(String value) {
+            addCriterion("TYPE <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerLike(String value) {
-            addCriterion("MANAGER like", value, "manager");
+        public Criteria andTypeLike(String value) {
+            addCriterion("TYPE like", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerNotLike(String value) {
-            addCriterion("MANAGER not like", value, "manager");
+        public Criteria andTypeNotLike(String value) {
+            addCriterion("TYPE not like", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerIn(List<String> values) {
-            addCriterion("MANAGER in", values, "manager");
+        public Criteria andTypeIn(List<String> values) {
+            addCriterion("TYPE in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerNotIn(List<String> values) {
-            addCriterion("MANAGER not in", values, "manager");
+        public Criteria andTypeNotIn(List<String> values) {
+            addCriterion("TYPE not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerBetween(String value1, String value2) {
-            addCriterion("MANAGER between", value1, value2, "manager");
+        public Criteria andTypeBetween(String value1, String value2) {
+            addCriterion("TYPE between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andManagerNotBetween(String value1, String value2) {
-            addCriterion("MANAGER not between", value1, value2, "manager");
+        public Criteria andTypeNotBetween(String value1, String value2) {
+            addCriterion("TYPE not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorIsNull() {
+            addCriterion("PROCESSOR is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorIsNotNull() {
+            addCriterion("PROCESSOR is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorEqualTo(String value) {
+            addCriterion("PROCESSOR =", value, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorNotEqualTo(String value) {
+            addCriterion("PROCESSOR <>", value, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorGreaterThan(String value) {
+            addCriterion("PROCESSOR >", value, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorGreaterThanOrEqualTo(String value) {
+            addCriterion("PROCESSOR >=", value, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorLessThan(String value) {
+            addCriterion("PROCESSOR <", value, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorLessThanOrEqualTo(String value) {
+            addCriterion("PROCESSOR <=", value, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorLike(String value) {
+            addCriterion("PROCESSOR like", value, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorNotLike(String value) {
+            addCriterion("PROCESSOR not like", value, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorIn(List<String> values) {
+            addCriterion("PROCESSOR in", values, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorNotIn(List<String> values) {
+            addCriterion("PROCESSOR not in", values, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorBetween(String value1, String value2) {
+            addCriterion("PROCESSOR between", value1, value2, "processor");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorNotBetween(String value1, String value2) {
+            addCriterion("PROCESSOR not between", value1, value2, "processor");
             return (Criteria) this;
         }
 
@@ -554,6 +624,66 @@ public class GenTaskHistoryExample {
             return (Criteria) this;
         }
 
+        public Criteria andExeCntIsNull() {
+            addCriterion("EXE_CNT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntIsNotNull() {
+            addCriterion("EXE_CNT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntEqualTo(Long value) {
+            addCriterion("EXE_CNT =", value, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntNotEqualTo(Long value) {
+            addCriterion("EXE_CNT <>", value, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntGreaterThan(Long value) {
+            addCriterion("EXE_CNT >", value, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntGreaterThanOrEqualTo(Long value) {
+            addCriterion("EXE_CNT >=", value, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntLessThan(Long value) {
+            addCriterion("EXE_CNT <", value, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntLessThanOrEqualTo(Long value) {
+            addCriterion("EXE_CNT <=", value, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntIn(List<Long> values) {
+            addCriterion("EXE_CNT in", values, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntNotIn(List<Long> values) {
+            addCriterion("EXE_CNT not in", values, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntBetween(Long value1, Long value2) {
+            addCriterion("EXE_CNT between", value1, value2, "exeCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeCntNotBetween(Long value1, Long value2) {
+            addCriterion("EXE_CNT not between", value1, value2, "exeCnt");
+            return (Criteria) this;
+        }
+
         public Criteria andMemoIsNull() {
             addCriterion("MEMO is null");
             return (Criteria) this;
@@ -624,8 +754,13 @@ public class GenTaskHistoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andManagerLikeInsensitive(String value) {
-            addCriterion("upper(MANAGER) like", value.toUpperCase(), "manager");
+        public Criteria andTypeLikeInsensitive(String value) {
+            addCriterion("upper(TYPE) like", value.toUpperCase(), "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessorLikeInsensitive(String value) {
+            addCriterion("upper(PROCESSOR) like", value.toUpperCase(), "processor");
             return (Criteria) this;
         }
 

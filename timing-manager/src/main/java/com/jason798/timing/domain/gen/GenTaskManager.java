@@ -7,6 +7,8 @@ public class GenTaskManager implements Serializable {
 
     private String name;
 
+    private Long aliveTm;
+
     private Long lastUpdateTm;
 
     private static final long serialVersionUID = 1L;
@@ -25,6 +27,14 @@ public class GenTaskManager implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Long getAliveTm() {
+        return aliveTm;
+    }
+
+    public void setAliveTm(Long aliveTm) {
+        this.aliveTm = aliveTm;
     }
 
     public Long getLastUpdateTm() {

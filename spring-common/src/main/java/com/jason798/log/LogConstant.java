@@ -38,16 +38,9 @@ public class LogConstant {
     public static final String DATAOUT = "DATAOUT";
     public static final String OTHER = "OT";
 
-    /**
-     * 模块
-     */
-    public static final String MODULE_ECP = "ecp";
-    /**
-     * ecp 返回处理相关
-     */
-    public static final String MODULE_ECP_RECV = "ecprecv";
-    //public static final String MODULE_ECP = "ecpres";
+
     public static final String MODULE_LOG = "log";
+	public static final String MODULE_TIMING = "timing";
     public static final String MODULE_UNKNOWN = "unknown";
 
     /**
