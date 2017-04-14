@@ -330,7 +330,7 @@ public final class CronExpression implements Serializable, Cloneable {
      * <I>not</I> satisfy the expression
      *
      * @param date the date/time at which to begin the search for the next
-     *             invalid date/time
+     *             setInValid date/time
      * @return the next valid date/time
      */
     public Date getNextInvalidTimeAfter(Date date) {

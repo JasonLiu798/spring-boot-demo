@@ -1,9 +1,13 @@
 package com.jason798.timing.task;
 
 
-import com.jason798.timing.TimingCoreHelper;
-import com.jason798.timing.api.ITimingTaskCond;
+import com.jason798.log.LogClient;
+import com.jason798.log.LogConstant;
+import com.jason798.timing.TimingInnerManager;
 import com.jason798.timing.domain.TaskEnum;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * fix rate until reach the condition
@@ -12,26 +16,12 @@ import com.jason798.timing.domain.TaskEnum;
  */
 public class FixRateCondTask extends FixRateCntTask {
 
-    public FixRateCondTask(Long tid, TimingCoreHelper helper, ITimingTaskCond service, Long maxTime) {
-        super(tid,helper);
+    protected Method condMethod;
+
+    public FixRateCondTask(Long tid, TimingInnerManager helper, Object target, Method exeMethod, Method condMethod, Long maxTime) {
+        super(tid, helper, target, exeMethod, maxTime);
         this.type = TaskEnum.FIXRATECOND;
-        this.service = service;
-        this.maxTime = maxTime;
-    }
-
-    /**
-     * buziness obj
-     */
-    private ITimingTaskCond service;
-
-    @Override
-    public void before() {
-        super.before();
-    }
-
-    @Override
-    public void execute() {
-        service.execute();
+        this.condMethod = condMethod;
     }
 
     /**
@@ -39,31 +29,35 @@ public class FixRateCondTask extends FixRateCntTask {
      */
     @Override
     public void after() {
-        System.out.println("FixRateCondTask after bf");
         super.after();
-        System.out.println("FixRateCondTask after af");
-        if(!this.end) {
-            if (service.cond()) {
-                removeStatus();
-                timingCoreHelper.cancelTask(tid);
+        if (!this.end) {
+            Boolean bres = null;
+            try {
+                Object res = condMethod.invoke(target,param);
+                bres = (Boolean) res;
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                LogClient.writeError(LogConstant.MODULE_TIMING, "task "+tid+",execute cond fail", e);
+
+            }
+            //bres == null,mean cond method execute fail
+            //bres == true,mean condition=true
+            //then stop task
+            if (bres == null || bres == true) {
                 this.end = true;
             }
         }
-        //LOG.de
-    }
-
-    public boolean getCond(){
-        return service.cond();
     }
 
     /**
      * ################## getter & setter ################################
      */
-    public ITimingTaskCond getService() {
-        return service;
+
+    public void setCondMethod(Method condMethod) {
+        this.condMethod = condMethod;
     }
 
-    public void setService(ITimingTaskCond service) {
-        this.service = service;
-    }
+    //    public Method getCondMethod() {
+//        return condMethod;
+//    }
+
 }

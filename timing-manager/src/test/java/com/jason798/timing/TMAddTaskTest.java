@@ -7,10 +7,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import sf.aos.timing.api.ITimingTaskCond;
-import sf.aos.timing.task.FixRateCondTask;
-import sf.aos.timing.task.FixRateTask;
-import sf.aos.util.common.SystemUtil;
 
 import javax.annotation.Resource;
 import java.util.concurrent.CountDownLatch;

@@ -7,8 +7,6 @@ public class GenTaskHistory implements Serializable {
 
     private Long tid;
 
-    private String type;
-
     private String processor;
 
     private String thread;
@@ -39,14 +37,6 @@ public class GenTaskHistory implements Serializable {
 
     public void setTid(Long tid) {
         this.tid = tid;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
     }
 
     public String getProcessor() {

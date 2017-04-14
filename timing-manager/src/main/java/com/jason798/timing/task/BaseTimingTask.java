@@ -1,12 +1,17 @@
 package com.jason798.timing.task;
 
-
-
+import com.jason798.json.JSONFastJsonUtil;
 import com.jason798.log.LogClient;
-import com.jason798.timing.TimingContext;
-import com.jason798.timing.TimingCoreHelper;
+import com.jason798.log.LogConstant;
+import com.jason798.timing.TimingInnerManager;
 import com.jason798.timing.domain.TaskEnum;
+import com.jason798.timing.domain.TimingConstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.ScheduledFuture;
 
 /**
@@ -14,7 +19,8 @@ import java.util.concurrent.ScheduledFuture;
  *
  * @author JasonLiu
  */
-public abstract class BaseTask implements Runnable {
+public abstract class BaseTimingTask implements Runnable {
+    private static Logger LOG = LoggerFactory.getLogger(BaseTimingTask.class);
     /**
      * ################# basis ##################
      */
@@ -37,7 +43,7 @@ public abstract class BaseTask implements Runnable {
     /**
      * timing core helper
      */
-    protected TimingCoreHelper timingCoreHelper;
+    protected TimingInnerManager innerManager;
 
     /**
      * ################ timing #####################
@@ -50,6 +56,24 @@ public abstract class BaseTask implements Runnable {
      * interval time
      */
     protected long interval = 0;
+
+    /**
+     * ############## executor ###################
+     */
+    protected Object target;
+
+    protected Method exeMethod;
+    /**
+     * ############## param ####################
+     */
+    /**
+     * execute exeMethod got param
+     */
+    protected boolean hasParam = false;
+    /**
+     * parameter
+     */
+    protected String param;
 
     /**
      * ############### status #####################
@@ -73,7 +97,7 @@ public abstract class BaseTask implements Runnable {
     /**
      * runed counter
      */
-    protected Long runnedCounter=0L;
+    protected Long runnedCounter = 0L;
     /**
      * last run success
      */
@@ -88,14 +112,17 @@ public abstract class BaseTask implements Runnable {
      */
     protected boolean end = false;
 
+
     /**
      * constructor
      *
      * @param tid
      */
-    public BaseTask(Long tid, TimingCoreHelper helper) {
+    public BaseTimingTask(Long tid, TimingInnerManager helper, Object target, Method method) {
         this.tid = tid;
-        this.timingCoreHelper = helper;
+        this.innerManager = helper;
+        this.target = target;
+        this.exeMethod = method;
     }
 
     /**
@@ -103,32 +130,68 @@ public abstract class BaseTask implements Runnable {
      * for sys
      */
     public void before() {
-    	if(persist) {
-			timingCoreHelper.updateStatus(this.tid, TimingConstant.STATUS_EXECUTING);
-		}
+        if (persist) {
+            innerManager.updateStatus(this.tid, TimingConstant.STATUS_EXECUTING);
+        }
         running = true;
         lastStartTime = System.currentTimeMillis();
         lastExeSucc = true;
+
     }
 
-    abstract public void execute();
+    public void execute() {
+        try {
+            if (hasParam) {
+                exeMethod.invoke(target, param);
+            } else {
+                exeMethod.invoke(target);
+            }
+        } catch (IllegalAccessException |InvocationTargetException e) {
+            LogClient.writeError(LogConstant.MODULE_TIMING,"execute exception",e);
+            if(LOG.isDebugEnabled()){
+                LOG.debug("timing invoke exeMethod error {}",e.getMessage());
+            }
+        }
+    }
 
     /**
      * for runnable
      */
     @Override
-    public void run(){
+    public void run() {
+        if(LOG.isDebugEnabled() && tid>0) {
+            LOG.debug("task run before bf {}", JSONFastJsonUtil.objectToJson(this));
+        }
         before();
+        if(LOG.isDebugEnabled() && tid>0) {
+            LOG.debug("task run before af {}", JSONFastJsonUtil.objectToJson(this));
+        }
+
         try {
             execute();
         } catch (Exception e) {
-            LogClient.writeError(BaseTask.class, "task execute error", e);
+            LogClient.writeError(BaseTimingTask.class, "task execute error", e);
             lastExeSucc = false;
         }
+
+        if(LOG.isDebugEnabled() && tid>0) {
+            LOG.debug("task run after bf {}", JSONFastJsonUtil.objectToJson(this));
+        }
         after();
-        if(persist) {
-			afterPersist();
-		}
+        if(LOG.isDebugEnabled() && tid>0) {
+            LOG.debug("task run after af {}", JSONFastJsonUtil.objectToJson(this));
+        }
+        if (persist) {
+            afterPersist();
+        }
+
+        //end thread
+        if(end){
+            boolean canRes = innerManager.cancelTask(tid);//end thread
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("cancel task res {}",canRes);
+            }
+        }
     }
 
     /**
@@ -139,22 +202,16 @@ public abstract class BaseTask implements Runnable {
         running = false;
         runnedCounter++;
     }
-    
-    public void afterPersist(){
-		timingCoreHelper.saveHistory(this);//persist history
-		if(end) {
-			timingCoreHelper.updateStatus(this.tid, TimingConstant.STATUS_END);
-		}else{
-			timingCoreHelper.updateStatus(this.tid, TimingConstant.STATUS_WAITING);
-		}
-	}
 
-    /**
-     * remove status
-     */
-    public BaseTask removeStatus() {
-        return TimingContext.removeTask(tid);
+    public void afterPersist() {
+        innerManager.saveHistory(this);//persist history
+        if (end) {
+            innerManager.updateStatus(this.tid, TimingConstant.STATUS_END);
+        } else {
+            innerManager.updateStatus(this.tid, TimingConstant.STATUS_WAITING);
+        }
     }
+
 
 
     /**
@@ -244,12 +301,12 @@ public abstract class BaseTask implements Runnable {
         this.submitTm = submitTm;
     }
 
-    public TimingCoreHelper getTimingCoreHelper() {
-        return timingCoreHelper;
+    public TimingInnerManager getInnerManager() {
+        return innerManager;
     }
 
-    public void setTimingCoreHelper(TimingCoreHelper timingCoreHelper) {
-        this.timingCoreHelper = timingCoreHelper;
+    public void setInnerManager(TimingInnerManager innerManager) {
+        this.innerManager = innerManager;
     }
 
     public Long getRunnedCounter() {
@@ -260,12 +317,44 @@ public abstract class BaseTask implements Runnable {
         this.runnedCounter = runnedCounter;
     }
 
+    public boolean isHasParam() {
+        return hasParam;
+    }
+
+    public void setHasParam(boolean hasParam) {
+        this.hasParam = hasParam;
+    }
+
+    public String getParam() {
+        return param;
+    }
+
+    public void setParam(String param) {
+        this.param = param;
+    }
+
     public long getInterval() {
         return interval;
     }
 
     public void setInterval(long interval) {
         this.interval = interval;
+    }
+
+    public Object getTarget() {
+        return target;
+    }
+
+    public void setTarget(Object target) {
+        this.target = target;
+    }
+
+//    public Method getExeMethod() {
+//        return exeMethod;
+//    }
+
+    public void setExeMethod(Method exeMethod) {
+        this.exeMethod = exeMethod;
     }
 
     public boolean isPersist() {

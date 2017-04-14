@@ -3,20 +3,20 @@
 <mapper namespace="com.jason798.timing.mapper.gen.GenTaskMapper">
   <resultMap id="BaseResultMap" type="com.jason798.timing.domain.gen.GenTask">
     <id column="TID" jdbcType="BIGINT" property="tid" />
-    <result column="TKEY" jdbcType="VARCHAR" property="tkey" />
-    <result column="SERVICE_NAME" jdbcType="VARCHAR" property="serviceName" />
-    <result column="CONF_TYPE" jdbcType="VARCHAR" property="confType" />
-    <result column="CONF_CRON_EXPRESSION" jdbcType="VARCHAR" property="confCronExpression" />
-    <result column="CONF_DELAY_TM" jdbcType="BIGINT" property="confDelayTm" />
-    <result column="CONF_INTERVAL_TM" jdbcType="BIGINT" property="confIntervalTm" />
-    <result column="CONF_EXE_TIMES" jdbcType="BIGINT" property="confExeTimes" />
-    <result column="PROCESSOR" jdbcType="VARCHAR" property="processor" />
-    <result column="STATUS_END" jdbcType="CHAR" property="statusEnd" />
-    <result column="MUTEX" jdbcType="CHAR" property="mutex" />
-    <result column="MUTEX_TM" jdbcType="BIGINT" property="mutexTm" />
-    <result column="STATUS" jdbcType="CHAR" property="status" />
-    <result column="ALIVE_TM" jdbcType="BIGINT" property="aliveTm" />
-    <result column="VALID" jdbcType="CHAR" property="valid" />
+    <data column="TKEY" jdbcType="VARCHAR" property="tkey" />
+    <data column="SERVICE_NAME" jdbcType="VARCHAR" property="serviceName" />
+    <data column="CONF_TYPE" jdbcType="VARCHAR" property="confType" />
+    <data column="CONF_CRON_EXPRESSION" jdbcType="VARCHAR" property="confCronExpression" />
+    <data column="CONF_DELAY_TM" jdbcType="BIGINT" property="confDelayTm" />
+    <data column="CONF_INTERVAL_TM" jdbcType="BIGINT" property="confIntervalTm" />
+    <data column="CONF_EXE_TIMES" jdbcType="BIGINT" property="confExeTimes" />
+    <data column="PROCESSOR" jdbcType="VARCHAR" property="processor" />
+    <data column="STATUS_END" jdbcType="CHAR" property="statusEnd" />
+    <data column="MUTEX" jdbcType="CHAR" property="mutex" />
+    <data column="MUTEX_TM" jdbcType="BIGINT" property="mutexTm" />
+    <data column="STATUS" jdbcType="CHAR" property="status" />
+    <data column="ALIVE_TM" jdbcType="BIGINT" property="aliveTm" />
+    <data column="VALID" jdbcType="CHAR" property="valid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

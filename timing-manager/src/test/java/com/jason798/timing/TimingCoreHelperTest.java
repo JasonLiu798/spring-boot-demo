@@ -6,7 +6,6 @@ import org.junit.*;
 import org.junit.rules.ExpectedException;
 
 
-
 public class TimingCoreHelperTest {
 
     @Test

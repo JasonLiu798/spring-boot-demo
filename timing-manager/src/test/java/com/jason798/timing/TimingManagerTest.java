@@ -1,6 +1,6 @@
 package com.jason798.timing;
 
-import com.jason798.timing.api.ITimingTaskCond;
+import com.jason798.timing.api.RetCode;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,204 +25,118 @@ public class TimingManagerTest {
     private TimingManagerImpl timingManager;
 
     @Test
-    public void test(){
+    public void testExecCronTask() {
         timingManager.init();
-        ExecutorService es = Executors.newFixedThreadPool(10);
-//        GenTask t = timingManager.getTaskByKey("t1");
-//        System.out.println("res:"+JSONFastJsonUtil.objectToJson(t));
+
+        RetCode res = timingManager.execCronTask(1L);
+        System.out.println("res:"+res);
+
+        res = timingManager.execCronTask(2L);
+        System.out.println("res:"+res);
+        SystemUtil.sleepForever();
 
     }
 
-    public static class T1 implements ITimingTaskCond {
-        private String key;
-        private CountDownLatch latch;
-        public T1(String key, TimingManagerImpl tm, CountDownLatch latch){
-            this.key = key;
-            this.manager = tm;
-            this.latch=latch;
-        }
-        private TimingManagerImpl manager;
-
-        @Override
-        public void execute() {
-            long id = Thread.currentThread().getId();
-            try {
-                latch.await();
-                System.out.println(id+" runing T1 ");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public boolean cond() {
-            return false;
-        }
-    }
-
-
-    /*
 
     @Test
-    public void testInit() throws Exception {
-        es = Executors.newFixedThreadPool(10);
-        CountDownLatch latch = new CountDownLatch(2);
-        T1 t1 = new T1("t1",timingManager,latch);
-        T1 t2 = new T1("t1",timingManager,latch);
+    public void reExecDynamicTask() {
+        timingManager.init();
+        RetCode res = timingManager.reExecDynamicTask(3L);
+        System.out.println("res:" + res);
+
+        SystemUtil.sleepForever();
+    }
+
+
+    @Test
+    public void MTreExecDynamicTask() {
+        timingManager.init();
+
+        CountDownLatch l = new CountDownLatch(2);
+        T1 t1 = new T1("t1", timingManager, l);
+        T1 t2 = new T1("t2", timingManager, l);
+        ExecutorService es = Executors.newFixedThreadPool(10);
         es.submit(t1);
         es.submit(t2);
 
-        SystemUtil.sleep(100*1000);
+        SystemUtil.sleepForever();
     }
 
-    public static class T1 implements Runnable{
-        @Override
+
+    public static class T1 implements Runnable {
+        private CountDownLatch latch;
+        private TimingManagerImpl tm;
+        private String key;
+
+        public T1(String key, TimingManagerImpl manager, CountDownLatch latch) {
+            this.key = key;
+            this.tm = manager;
+            this.latch = latch;
+        }
+
         public void run() {
-            latch.countDown();
             long id = Thread.currentThread().getId();
             try {
+                SystemUtil.sleep(4000);
+                latch.countDown();
                 latch.await();
-                System.out.println(id+" start to run");
+                System.out.println(key+"thread start run " + id);
+                RetCode res = tm.reExecDynamicTask(3L);
+                System.out.println(key+"res:" + res);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //manager.startTaskPre(key);
+
         }
-        private String key;
-        private CountDownLatch latch;
-        public T1(String key, TimingManagerImpl tm, CountDownLatch latch){
-            this.key = key;
-            this.manager = tm;
-            this.latch=latch;
-        }
-        private TimingManagerImpl manager;
+    }
+
+    @Test
+    public void testList(){
+        List l = timingManager.getTaskList("Y","Y");
+        System.out.println("res:"+l.size()+","+ JSONFastJsonUtil.objectToJson(l));
+
+        l = timingManager.getTaskList("Y","N");
+        System.out.println("res:"+l.size()+","+ JSONFastJsonUtil.objectToJson(l));
 
     }
-*/
-    
+
+
     @Test
-    public void testRegiste() throws Exception { 
-        
+    public void testUpdateCron(){
+        timingManager.init();
+
+        TimingConstant.NOT_ALIVE_INTERVAL = 5L;
+        //TimingConstant.MUTEX_INTERVAL;
+
+
+        RetCode res = timingManager.execCronTask(1L);
+        System.out.println("exe cron eres:"+res);
+
+        SystemUtil.sleep(28*1000);
+
+        String newExpression = "*/5 * * * * ?";
+        RetCode ures = timingManager.updateCronTask(1L,newExpression);
+
+        System.out.println("ures:"+JSONFastJsonUtil.objectToJson(ures));
+
+        SystemUtil.sleepForever();
+
     }
-    
-    @Test
-    public void testTaskExist() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testStartTask() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testGetTaskForUpdate() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testSetTaskProcessing() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testSetTaskProcessed() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testSetTaskProcessStatus() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testDelay() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testDecreaseTaskCount() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testFixRate() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testGetTaskStatusDto() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testGetTaskStatusDtoFmt() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testGenRandomTid() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testGetTaskFuture() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testCancleFixRateTask() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testFixRate4test() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testDelay4test() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testBuild4test() throws Exception { 
-        
-    }
-    
-    @Test
-    public void testDestroy() throws Exception { 
-        
-    }
-    
-      
-    @Test
-    public void testGetTid() throws Exception { 
-                /* 
-                try { 
-                   Method method = TimingManager.getClass().getMethod("getTid", FixRateTask.class); 
-                   method.setAccessible(true); 
-                   method.invoke(<Object>, <Parameters>); 
-                } catch(NoSuchMethodException e) { 
-                } catch(IllegalAccessException e) { 
-                } catch(InvocationTargetException e) { 
-                } 
-                */ 
-            }
-        
+
+
     @Before
-    public void before() throws Exception { 
-    } 
+    public void before() throws Exception {
+    }
 
     @After
-    public void after() throws Exception { 
+    public void after() throws Exception {
     }
-    
+
     @BeforeClass
-    public static void beforeClass() throws Exception{
-        
+    public static void beforeClass() throws Exception {
+
     }
-    
+
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
 } 

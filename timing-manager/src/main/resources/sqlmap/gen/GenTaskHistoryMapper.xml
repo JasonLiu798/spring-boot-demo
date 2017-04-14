@@ -3,15 +3,15 @@
 <mapper namespace="com.jason798.timing.mapper.gen.GenTaskHistoryMapper">
   <resultMap id="BaseResultMap" type="com.jason798.timing.domain.gen.GenTaskHistory">
     <id column="htid" jdbcType="BIGINT" property="htid" />
-    <result column="tid" jdbcType="BIGINT" property="tid" />
-    <result column="TYPE" jdbcType="VARCHAR" property="type" />
-    <result column="PROCESSOR" jdbcType="VARCHAR" property="processor" />
-    <result column="THREAD" jdbcType="VARCHAR" property="thread" />
-    <result column="START_TM" jdbcType="BIGINT" property="startTm" />
-    <result column="END_TM" jdbcType="BIGINT" property="endTm" />
-    <result column="EXE_STATUS" jdbcType="CHAR" property="exeStatus" />
-    <result column="EXE_CNT" jdbcType="BIGINT" property="exeCnt" />
-    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <data column="tid" jdbcType="BIGINT" property="tid" />
+    <data column="TYPE" jdbcType="VARCHAR" property="type" />
+    <data column="PROCESSOR" jdbcType="VARCHAR" property="processor" />
+    <data column="THREAD" jdbcType="VARCHAR" property="thread" />
+    <data column="START_TM" jdbcType="BIGINT" property="startTm" />
+    <data column="END_TM" jdbcType="BIGINT" property="endTm" />
+    <data column="EXE_STATUS" jdbcType="CHAR" property="exeStatus" />
+    <data column="EXE_CNT" jdbcType="BIGINT" property="exeCnt" />
+    <data column="MEMO" jdbcType="VARCHAR" property="memo" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

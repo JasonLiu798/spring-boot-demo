@@ -1,13 +1,13 @@
 package com.jason798.timing.task;
 
-import com.jason798.common.DateUtil;
-import com.jason798.timing.TimingCoreHelper;
-import com.jason798.timing.api.ITimingTask;
+import com.jason798.timing.TimingInnerManager;
 import com.jason798.timing.domain.CronExpression;
 import com.jason798.timing.domain.TaskEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -24,20 +24,10 @@ public class CronTask extends FixRateTask {
      */
     private CronExpression cronExpression;
 
-    public CronTask(Long tid, TimingCoreHelper helper, ITimingTask service, String cronExpressionStr) throws ParseException {
-        super(tid, helper, service);
+    public CronTask(Long tid, TimingInnerManager helper, Object target, Method exe, String cronExpressionStr) throws ParseException {
+        super(tid, helper, target,exe);
         this.type = TaskEnum.CRON;
         this.cronExpression = new CronExpression(cronExpressionStr);
-    }
-
-    @Override
-    public void before() {
-        super.before();
-    }
-
-    @Override
-    public void execute() {
-        service.execute();
     }
 
     /**
@@ -63,7 +53,7 @@ public class CronTask extends FixRateTask {
         super.after();
         this.delayTime = cron2delay();
         LOG.debug("cron task next delay {}", this.delayTime);
-        boolean res = timingCoreHelper.reSubmitCronTask(this);
+        boolean res = innerManager.reSubmitCronTask(this);
         LOG.debug("cron task reput res {}", res);
     }
 

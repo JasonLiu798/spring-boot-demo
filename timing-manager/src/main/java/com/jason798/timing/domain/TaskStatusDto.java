@@ -16,11 +16,12 @@ public class TaskStatusDto implements Serializable {
     private String lastStartTm;
     private String lastStopTm;
 
-    private long startStopInterval;
-    private Boolean runned;
+    private Long startStopInterval;
+
+    private Boolean end =null;
 
     /**
-     * runned counter,for fix rate and cron
+     * end counter,for fix rate and cron
      */
     private Long runnedCounter;
 
@@ -64,8 +65,8 @@ public class TaskStatusDto implements Serializable {
         this.cond = cond;
     }
 
-    public Boolean getRunned() {
-        return runned;
+    public Boolean getEnd() {
+        return end;
     }
 
     public Long getRunnedCounter() {
@@ -100,11 +101,11 @@ public class TaskStatusDto implements Serializable {
         this.lastStopTm = lastStopTm;
     }
 
-    public long getStartStopInterval() {
+    public Long getStartStopInterval() {
         return startStopInterval;
     }
 
-    public void setStartStopInterval(long startStopInterval) {
+    public void setStartStopInterval(Long startStopInterval) {
         this.startStopInterval = startStopInterval;
     }
 
@@ -124,12 +125,12 @@ public class TaskStatusDto implements Serializable {
         this.tkey = tkey;
     }
 
-    public Boolean isRunned() {
-        return runned;
+    public Boolean isEnd() {
+        return end;
     }
 
-    public void setRunned(Boolean runned) {
-        this.runned = runned;
+    public void setEnd(Boolean end) {
+        this.end = end;
     }
 
     public boolean isRunning() {

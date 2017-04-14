@@ -25,5 +25,6 @@ public enum TaskEnum {
     /**
      * execute run at fix rate until condition reach
      */
-    FIXRATECOND
+    FIXRATECOND,
+    FIXRATECONDPARAM
 }

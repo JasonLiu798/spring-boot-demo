@@ -5,9 +5,9 @@ package com.jason798.timing.api;
  *
  * @author JasonLiu
  */
-public interface ITimingTaskCond extends ITimingTask {
+public interface ICond {
     /**
-     * is reach the condition
+     * return true,task stop
      */
-    boolean cond();
+    boolean cond(String param);
 }

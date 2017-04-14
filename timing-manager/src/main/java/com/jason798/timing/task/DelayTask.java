@@ -1,59 +1,48 @@
 package com.jason798.timing.task;
 
 
-import com.jason798.timing.TimingCoreHelper;
-import com.jason798.timing.api.ITimingTask;
-import com.jason798.timing.domain.TaskEnum;
+import com.jason798.timing.TimingInnerManager;
+
+import java.lang.reflect.Method;
 
 /**
  * delay execute task
  *
  * @author JasonLiu
  */
-public class DelayTask extends BaseTask {
-
-    protected ITimingTask service;
+public class DelayTask extends BaseTimingTask {
 
     protected boolean runned = false;
 
-    public DelayTask(Long tid, TimingCoreHelper helper) {
-        super(tid,helper);
-    }
-    public DelayTask(Long tid, TimingCoreHelper helper, ITimingTask service) {
-        super(tid,helper);
-        this.type = TaskEnum.DELAY;
-        this.service = service;
-    }
-
-    @Override
-    public void before() {
-        super.before();
+    /**
+     * constructor
+     *
+     * @param tid
+     * @param helper
+     * @param target
+     * @param method
+     */
+    public DelayTask(Long tid, TimingInnerManager helper, Object target, Method method) {
+        super(tid, helper, target, method);
     }
 
-    @Override
-    public void execute() {
-        service.execute();
-    }
+
+//    public DelayTask(Long tid, TimingInnerManager helper, ITimingTask service) {
+//        super(tid,helper);
+//        this.type = TaskEnum.DELAY;
+//    }
 
     @Override
     public void after(){
         runned = true;
-        runnedCounter++;
+        end = true;
         super.after();
-        removeStatus();
     }
 
 
     /**
      * ############## getter & setter #################
      */
-    public void setService(ITimingTask service) {
-        this.service = service;
-    }
-    public ITimingTask getService() {
-        return service;
-    }
-
     public boolean isRunned() {
         return runned;
     }

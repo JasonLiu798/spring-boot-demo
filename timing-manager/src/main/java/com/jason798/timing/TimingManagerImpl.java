@@ -6,10 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.text.ParseException;
+import java.util.List;
 
 /**
  * timing mansger
+ * todo:timing clear invalid,end task
+ * todo:clear time-out task
+ * todo:test restart task
  */
 @Component
 public class TimingManagerImpl implements TimingManager {
@@ -17,181 +20,358 @@ public class TimingManagerImpl implements TimingManager {
     @Resource
     private TimingCommonHelper timingCommonHelper;
     @Resource
-    private TimingTaskHelper timingTaskHelper;
+    private TimingInnerManager timingInnerManager;
     @Resource
-    private TimingCoreHelper timingCoreHelper;
+    private TimingLockHelper lockHelper;
+    @Resource
+    private TimingDbHelper timingDbHelper;
 
     /**
      * unique id
      */
     private String managerId;
-    private Long id;
 
     public TimingManagerImpl() {
     }
 
     /**
-     * init
+     * init core pool
      */
     public void init() {
-        String managerId = timingCommonHelper.registe();
+        String managerId = timingDbHelper.registeManager();
+        if (StringCheckUtil.isEmpty(managerId)) {
+            LogClient.writeError(
+                    LogConstant.MODULE_TIMING,
+                    "registe timing manager fail" + managerId);
+            return;
+        }
         this.managerId = managerId;
-        timingCoreHelper.init();
+        timingInnerManager.init();
     }
 
     /**
-     * submit fix rate task, execute until condition reach,or execute maxtime
+     * add dynamic fix rate cond task with param
      *
-     * @param task
-     * @param delay
-     * @param interval
-     * @param runMaxTime
      * @return
      */
     @Override
-    public boolean addFixRateCondTask(ITimingTaskCond task, Long delay, Long interval, Long runMaxTime) {
-        //db insert
-        Long tid = timingTaskHelper.addFixRateCondTask(delay, interval, runMaxTime);
-        //submit to pool
-        if (!timingCoreHelper.submitFixRateCond(tid, task, delay, interval, runMaxTime)) {
-            LogClient.writeError(TimingManager.class.getSimpleName(), "submit fix rate cond task fail");
-            return false;
+    public RetCode addDynamicTask(AddTaskParam param) {
+        RetCode chkRet = timingCommonHelper.checkTaskCanProcess(param);
+        if (chkRet != RetCode.SUCCESS) {
+            return chkRet;
         }
-        return true;
-    }
 
-    @Override
-    public boolean addFixRateCondTask(ITimingTaskCond task, Long delay, Long interval) {
-        return addFixRateCondTask(task, delay, interval, TimingConstant.DFT_MAX_RUN_TIME);
-    }
+        Object target = getTarget(param.getService());
+        if (target == null) {
+            LogClient.writeError(LogConstant.MODULE_TIMING, "get target null");
+            return RetCode.GET_BEAN_NULL;
+        }
 
-    @Override
-    public boolean addFixRateCondTask(ITimingTaskCond task, Long interval) {
-        return addFixRateCondTask(task, 0L, interval);
-    }
+        //db insert
+        //String type,String service,String param,Long delay, Long interval, Long maxTime
+        Long tid = timingDbHelper.addTask(String.valueOf(TaskEnum.FIXRATECONDPARAM), param.getService(), param.getParam(), param.getDelay(), param.getInterval(), param.getMaxTime());
+        if (tid == null) {
+            LogClient.writeError(LogConstant.MODULE_TIMING, "insert task to db fail");
+            return RetCode.ADD_DYN_TASK_DB_FAIL;
+        }
 
+        //submit to pool
+        boolean subRes = timingInnerManager.submitFixRate(tid,
+                target,
+                param.isForever(),//forever
+                param.isHasParam(),//param
+                param.isHasCond(),//cond
+                true,//persist
+                param.getParam(),//exe param
+                param.getDelay(), param.getInterval(),
+                param.getMaxTime(),
+                param.getRunedCnt()
+        );
 
-    @Override
-    public boolean addCronTask(String cronExpression, ITimingTask task) {
-
-        return false;
+        if (subRes) {
+            LOG.debug("submit dynamic task succ,tid {},service {}", tid, param.getService());
+            return RetCode.SUCCESS;
+        } else {
+            timingDbHelper.setInValid(tid);
+            LogClient.writeError(TimingManager.class.getSimpleName(), "submit dynamic task fail,tid " + tid + ",service " + param.getService());
+            return RetCode.RE_ADD_DYN_TASK_TO_POOL_FAIL;
+        }
     }
 
     /**
-     * when server restart
-     * exec not finish task
+     * add a cron task
+     *
+     * @return
+     */
+    @Override
+    public RetCode addCronTask(AddTaskParam param) {
+        RetCode checkRet = timingCommonHelper.checkTaskCanProcess(param);
+        if (checkRet != RetCode.SUCCESS) {
+            return checkRet;
+        }
+
+        Object target = getTarget(param.getService());
+        if (target == null) {
+            return RetCode.GET_BEAN_FAIL;
+        }
+
+        //db insert
+        //String type,String service,String param,Long delay, Long interval, Long maxTime
+        Long tid = timingDbHelper.addCronTask(param.getTkey(), param.getService(), param.getCronExpression());
+        if (tid == null) {
+            LogClient.writeError(LogConstant.MODULE_TIMING, "insert cron task to db fail");
+            return RetCode.ADD_CRON_DB_FAIL;
+        }
+
+        //submit to pool
+        //String key, Object target, String cronExpression
+        RespDto<Long> subRes = timingInnerManager.submitCronTask(
+                tid,
+                param.getTkey(),
+                target,
+                param.getCronExpression(),
+                0L
+        );
+        if (subRes.isSucc()) {
+            LOG.debug("submit cron task succ,tid {},service {}", tid, param.getService());
+            return RetCode.SUCCESS;
+        } else {
+            timingDbHelper.setInValid(tid);
+            LogClient.writeError(LogConstant.MODULE_TIMING, "submit dynamic task fail,tid " + tid + ",service " + param.getService());
+            return RetCode.ADD_CRON_POOL_FAIL;
+        }
+    }
+
+    /**
+     * update cron task
      *
      * @param tid
+     * @param cronExpression
+     * @return
      */
-    public void execFixRateCondTask(Long tid) {
-        GenTask rawTask = timingTaskHelper.getTaskById(tid);
+    @Override
+    public RetCode updateCronTask(Long tid, String cronExpression) {
+        if (timingInnerManager.taskExist(tid)) {//check exist in this manager
+            if (!timingCommonHelper.validCronExpression(cronExpression)) {//check valid expression
+                return RetCode.CRON_EXPESSION_INVALID;
+            }
+            //cancel task
+            boolean cancelRes = timingInnerManager.cancelTask(tid);
+            if (cancelRes) {
+                //reexecute
+                GenTask t = new GenTask();
+                t.setTid(tid);
+                t.setConfCronExpression(cronExpression);
+                timingDbHelper.updateTaskByPk(t);
+                return execCronTask(tid);
+            } else {
+                return RetCode.CANCEL_TASK_FAIL;
+            }
+        }
+        return RetCode.TASK_NOT_IN_THE_POOL;
     }
+
 
     /**
      * exec cron task
      *
      * @param tid
      */
-    public void execCronTask(Long tid) {
-        GenTask rawTask = timingTaskHelper.getTaskById(tid);
-        //check exist
-        if (rawTask == null) {
-            LogClient.writeError(LogConstant.MODULE_TIMING, "cron task " + id + " notexist");
-        }
-
-        //check type
-        if (!StringCheckUtil.equal(rawTask.getConfType(), String.valueOf(TaskEnum.CRON))) {
-            LogClient.writeError(LogConstant.MODULE_TIMING, "task " + id + " not cron");
-            return;
-        }
-
+    public RetCode execCronTask(Long tid) {
+        TaskDomain rawTask = timingDbHelper.getTaskById(tid);
         //pre check can process
-        if (!timingTaskHelper.checkTaskCanProcess(rawTask)) {
-            LogClient.writeInfo(TimingTaskHelper.class.getSimpleName(), "task cannot start " + JSONFastJsonUtil.objectToJson(rawTask));
+        RetCode chkRet = timingCommonHelper.checkTaskCanProcess(rawTask);
+        if (chkRet != RetCode.SUCCESS) {
+            LogClient.writeInfo(LogConstant.MODULE_TIMING, "cron task cannot start " + JSONFastJsonUtil.objectToJson(rawTask));
+            return chkRet;
         }
-
 
         //get execute service
-        ITimingTask task = null;
-        try {
-            task = (ITimingTask) AOSApplicationContextHepler.getBeanByName(rawTask.getServiceName());
-        } catch (Exception e) {
-            LogClient.writeError(LogConstant.MODULE_TIMING, "get cron service fail", e);
-            return;
-        }
-        if (task == null) {
-            LogClient.writeError(LogConstant.MODULE_TIMING, "get service fail,get null");
-            return;
+        Object target = getTarget(rawTask.getTservice());
+        if (target == null) {
+            LogClient.writeError(LogConstant.MODULE_TIMING, "rexec task fail,target null,service " + rawTask.getTservice());
+            return RetCode.GET_BEAN_NULL;
         }
 
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("can execute cron task {}", tid );
+        Long runCnt = rawTask.getRunCnt();
+        if (runCnt == null) {
+            runCnt = 0L;
         }
+
         //submit to pool
-        boolean lock = timingTaskHelper.lock(tid);
+        boolean lock = lockHelper.lock(tid);
         if (lock) {
             try {
-                RespDto<Long> submitRes = timingCoreHelper.submitCronTask(tid, rawTask.getTkey(), task, rawTask.getConfCronExpression());
-                if(submitRes.isSucc()){
-					timingTaskHelper.updateTaskStatus(tid, TimingConstant.STATUS_WAITING);
-				}else{
-                	LogClient.writeError(LogConstant.MODULE_TIMING,"submit cron task fail,tid "+tid);
-				}
-            } catch (ParseException e) {
+                RespDto<Long> submitRes = timingInnerManager.submitCronTask(
+                        tid, rawTask.getTkey(),
+                        target, rawTask.getConfCronExpression(),
+                        runCnt
+                );
+                if (submitRes.isSucc()) {
+                    timingDbHelper.updateTaskStatus(tid, TimingConstant.STATUS_WAITING);
+                    return RetCode.SUCCESS;
+                } else {
+                    LogClient.writeError(LogConstant.MODULE_TIMING, "submit cron task fail,tid " + tid);
+                    return RetCode.ADD_CRON_TO_POOL_FAIL;
+                }
+            } catch (Exception e) {
                 LogClient.writeError(LogConstant.MODULE_TIMING, "cron task init fail", e);
-                return;
+                return RetCode.ADD_CRON_TO_POOL_EXCEPTION;
             } finally {
-                timingTaskHelper.unlock(tid);
+                lockHelper.unlock(tid);
             }
         } else {
-            return;
+            return RetCode.GET_LOCK_FAIL;
         }
     }
-    
-    
-    
 
     /**
-     * 测试用 静态方法 方便调用
+     * get target service bean from spring
      *
-     public static ScheduledFuture fixRate4test(FixRateTask task, long dealy, long interval) {
-     TimingManager timingManager = null;
-     try {
-     timingManager = AOSApplicationContextHepler.getBean("timingManager", TimingManager.class);
-     return timingManager.fixRate(task, dealy, interval);
-     } catch (Exception e) {
-     LogClient.writeError(TimingManager.class, "schedule fix rate static error ", e);
-     return null;
-     }
-     }
-     */
-
-    /**
-     * 测试用 静态方法 方便调用
-     *
-     public static void delay4test(DelayTask runnable, long ms) {
-     TimingManager timingManager = null;
-     try {
-     timingManager = AOSApplicationContextHepler.getBean("timingManager", TimingManager.class);
-     } catch (Exception e) {
-     e.printStackTrace();
-     }
-     timingManager.delay(runnable, ms);
-     }
-     */
-
-
-    /**
-     * 测试用 生成 实例
-     *
+     * @param service
      * @return
-     *
-    public static TimingManager build4test() {
-    TimingManager tm = new TimingManager();
-    tm.init();
-    return tm;
-    }*/
+     */
+    private Object getTarget(String service) {
+        Object target = null;
+        try {
+            target = AOSApplicationContextHepler.getBeanByName(service);
+        } catch (Exception e) {
+            LogClient.writeError(LogConstant.MODULE_TIMING, "get target service exception", e);
+        }
+        return target;
+    }
 
+    /**
+     * re exe dynamic task
+     *
+     * @param tid
+     */
+    @Override
+    public RetCode reExecDynamicTask(Long tid) {
+        //get raw task from db
+        TaskDomain rawTask = timingDbHelper.getTaskById(tid);
+
+        //pre check,before lock
+        RetCode checkRet = timingCommonHelper.checkTaskCanProcess(rawTask);
+        if (checkRet != RetCode.SUCCESS) {
+            LogClient.writeError(LogConstant.MODULE_TIMING, "rexec task fail,check ret " + checkRet + ",task " + JSONFastJsonUtil.objectToJson(rawTask));
+            return checkRet;
+        }
+
+        //get target
+        Object target = getTarget(rawTask.getTservice());
+        if (target == null) {
+            LogClient.writeError(LogConstant.MODULE_TIMING, "rexec task fail,target null,service " + rawTask.getTservice());
+            return RetCode.GET_BEAN_NULL;
+        }
+
+        long runCount = 0L;
+        if (rawTask.getRunCnt() != null) {
+            runCount = rawTask.getRunCnt();
+        }
+
+        //lock
+        boolean lockRes = lockHelper.lock(tid);
+        if (lockRes) {
+            try {
+                //submit to pool
+                boolean subRes = timingInnerManager.submitFixRate(tid,
+                        target,
+                        false,//forever
+                        true,//param
+                        true,//cond
+                        true,//persist
+                        rawTask.getParam(),//exe param
+                        rawTask.getConfDelayTm(), rawTask.getConfIntervalTm(), rawTask.getConfExeTimes(),
+                        runCount
+                );
+
+                if (subRes) {
+                    LOG.debug("re exe dynamic task succ,tid {},service {}", tid, rawTask.getTservice());
+                    //todo:if delay = 0,dead lock
+                    timingDbHelper.updateTaskLiveTm(getManagerId(), tid);
+                    return RetCode.SUCCESS;
+                } else {
+                    LogClient.writeError(LogConstant.MODULE_TIMING, "re exe dynamic task fail,tid " + tid + ",service " + rawTask.getTservice());
+                    return RetCode.RE_ADD_DYN_TASK_TO_POOL_FAIL;
+                }
+            } catch (Exception e) {
+                LogClient.writeError(LogConstant.MODULE_TIMING, "submit fix rate task exception", e);
+                return RetCode.RE_ADD_DYN_TASK_TO_POOL_EXCEPTION;
+            } finally {
+                lockHelper.unlock(tid);
+            }
+        } else {
+            return RetCode.GET_LOCK_FAIL;
+        }
+    }
+
+    /**
+     * manual stop all task
+     * @return
+     */
+    @Override
+    public boolean manualStopAll() {
+        if (timingInnerManager.canStop()) {
+            timingInnerManager.shutDown();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * manual start pool
+     * @return
+     */
+    @Override
+    public boolean manualStart() {
+        if (timingInnerManager.canStart()) {
+            TimingContext.clearAll();
+            timingInnerManager.init();
+        }
+        return false;
+    }
+
+    /**
+     * manual restart pool
+     * @return
+     */
+    @Override
+    public boolean restart() {
+        if (timingInnerManager.canStop()) {
+            TimingContext.deatroyPool();
+            TimingContext.clearAll();
+            timingInnerManager.init();
+        }
+        return false;
+    }
+
+    /**
+     * ###################### db #############################
+     */
+
+    /**
+     * get task list from db
+     *
+     * @param valid
+     * @param showEnd
+     * @return
+     */
+    @Override
+    public List<TaskDomain> getTaskList(String valid, String showEnd) {
+        valid = StringEscapeUtils.escapeHtml4(valid);
+        showEnd = StringEscapeUtils.escapeHtml4(showEnd);
+        return timingDbHelper.getTaskDomains(valid, showEnd);
+    }
+
+    /**
+     * get status
+     * @return
+     */
+    @Override
+    public String getStatus() {
+        return TimingContext.getStatusFmt(true);
+    }
 
     /**
      * ##################### getter & setter #####################
@@ -204,35 +384,30 @@ public class TimingManagerImpl implements TimingManager {
         this.timingCommonHelper = timingCommonHelper;
     }
 
-    public TimingTaskHelper getTimingTaskHelper() {
-        return timingTaskHelper;
-    }
-
-    public void setTimingTaskHelper(TimingTaskHelper timingTaskHelper) {
-        this.timingTaskHelper = timingTaskHelper;
-    }
-
     public String getManagerId() {
         return managerId;
     }
+
 
     public void setManagerId(String managerId) {
         this.managerId = managerId;
     }
 
-    public Long getId() {
-        return id;
+    public TimingLockHelper getLockHelper() {
+        return lockHelper;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLockHelper(TimingLockHelper lockHelper) {
+        this.lockHelper = lockHelper;
     }
 
-    public TimingCoreHelper getTimingCoreHelper() {
-        return timingCoreHelper;
+    public TimingDbHelper getTimingDbHelper() {
+        return timingDbHelper;
     }
 
-    public void setTimingCoreHelper(TimingCoreHelper timingCoreHelper) {
-        this.timingCoreHelper = timingCoreHelper;
+    public void setTimingDbHelper(TimingDbHelper timingDbHelper) {
+        this.timingDbHelper = timingDbHelper;
     }
 }
+
+

@@ -1,69 +1,28 @@
 package com.jason798.timing.task;
 
 
-import com.jason798.timing.TimingCoreHelper;
-import com.jason798.timing.api.ITimingTask;
+import com.jason798.timing.TimingInnerManager;
 import com.jason798.timing.domain.TaskEnum;
+
+import java.lang.reflect.Method;
 
 /**
  * fix rate execute task
  *
  * @author JasonLiu
  */
-public class FixRateTask extends BaseTask {
+public class FixRateTask extends BaseTimingTask {
     /**
-     * business obj
+     * constructor
+     *
+     * @param tid
+     * @param helper
+     * @param target
+     * @param method
      */
-    protected ITimingTask service;
-
-    public FixRateTask(Long tid, TimingCoreHelper helper){
-        super(tid,helper);
+    public FixRateTask(Long tid, TimingInnerManager helper, Object target, Method method) {
+        super(tid, helper, target, method);
         this.type = TaskEnum.FIXRATE;
     }
 
-    public FixRateTask(Long tid, TimingCoreHelper helper, ITimingTask service) {
-        super(tid,helper);
-        this.type = TaskEnum.FIXRATE;
-        this.service = service;
-    }
-
-    @Override
-    public void before() {
-        super.before();
-    }
-
-    @Override
-    public void execute() {
-        service.execute();
-    }
-
-    @Override
-    public void after() {
-        super.after();
-    }
-
-    /**
-     * ########### getter & setter ###############
-     */
-    public long getInterval() {
-        return interval;
-    }
-
-    public void setInterval(long interval) {
-        this.interval = interval;
-    }
-
-    public ITimingTask getService() {
-        return service;
-    }
-
-    public void setService(ITimingTask service) {
-        this.service = service;
-    }
-    public Long getRunnedCounter() {
-        return runnedCounter;
-    }
-    public void setRunnedCounter(Long runnedCounter) {
-        this.runnedCounter = runnedCounter;
-    }
 }

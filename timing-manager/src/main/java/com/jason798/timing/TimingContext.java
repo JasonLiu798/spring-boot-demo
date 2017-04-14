@@ -1,13 +1,19 @@
 package com.jason798.timing;
 
+import com.jason798.collection.CollectionUtil;
+import com.jason798.json.JSONFastJsonUtil;
+import com.jason798.log.LogClient;
+import com.jason798.log.LogConstant;
+import com.jason798.timing.domain.TimingManagerStatusDto;
+import com.jason798.timing.task.BaseTimingTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sf.aos.common.LogClient;
-import sf.aos.timing.domain.TimingManagerStatusDto;
-import sf.aos.timing.task.BaseTask;
-import sf.aos.util.collection.CollectionUtil;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -16,6 +22,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TimingContext {
     private static Logger LOG = LoggerFactory.getLogger(TimingContext.class);
+
+    public static void clearAll() {
+        LogClient.writeWarn(LogConstant.MODULE_TIMING, "before clear timing context,CNT:" + getRunningTaskCnt() + ",taskMap:" + JSONFastJsonUtil.objectToJson(taskMap));
+        taskCount = new AtomicInteger();
+        executorService = null;
+        taskMap = new ConcurrentHashMap<>();
+    }
     /**
      * ################### for monitor ######################
      */
@@ -54,6 +67,9 @@ public class TimingContext {
      * @param poolsize
      */
     public static synchronized boolean buildTaskPool(int poolsize) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("init task pool,size {}", poolsize);
+        }
         executorService = Executors.newScheduledThreadPool(poolsize);
         if (executorService == null) {
             return false;
@@ -67,7 +83,8 @@ public class TimingContext {
      * @return
      */
     public static synchronized boolean deatroyPool() {
-        executorService.shutdown();
+        List<Runnable> rlist = executorService.shutdownNow();
+        LogClient.writeError(LogConstant.MODULE_TIMING, "manual shutdown task", JSONFastJsonUtil.objectToJson(rlist));
         return true;
     }
 
@@ -85,8 +102,8 @@ public class TimingContext {
         boolean cancelRes = future.cancel(true);
         if (cancelRes) {
             TimingContext.removeTask(tid);
-        }else{
-            LogClient.writeError(TimingContext.class.getSimpleName(),"cancel "+tid+" res false");
+        } else {
+            LogClient.writeError(LogConstant.MODULE_TIMING, "call task future cancel fail,tid " + tid );
         }
         return cancelRes;
     }
@@ -95,30 +112,31 @@ public class TimingContext {
     /**
      * for get task
      */
-    private static Map<Long, BaseTask> taskMap = new ConcurrentHashMap<>();
+    private static Map<Long, BaseTimingTask> taskMap = new ConcurrentHashMap<>();
 
     public static boolean taskExist(Long tid) {
         return taskMap.containsKey(tid);
     }
 
-    public static void addTask(Long tid, BaseTask task) {
+    public static void addTask(Long tid, BaseTimingTask task) {
         taskMap.put(tid, task);
     }
 
-    public static BaseTask getTask(Long tid) {
+    public static BaseTimingTask getTask(Long tid) {
         return taskMap.get(tid);
     }
 
     /**
      * remove task from map
+     *
      * @param tid
      * @return
      */
-    public static BaseTask removeTask(Long tid) {
-        BaseTask t = null;
-        if (tid!=null) {
+    public static BaseTimingTask removeTask(Long tid) {
+        BaseTimingTask t = null;
+        if (tid != null) {
             t = taskMap.remove(tid);
-        }else{
+        } else {
             LOG.error("remove task fail tid null");
         }
         decrementTaskCnt();
@@ -132,11 +150,27 @@ public class TimingContext {
      * @return
      */
     public static ScheduledFuture getFuture(Long tid) {
-        BaseTask t = getTask(tid);
+        BaseTimingTask t = getTask(tid);
         if (t != null) {
             return t.getFuture();
         }
         return null;
+    }
+
+    public static Set<Long> getTasks() {
+        return taskMap.keySet();
+    }
+
+    public static List<Long> getTaskList() {
+        Set<Long> tasks = taskMap.keySet();
+        if (CollectionUtil.isEmpty(tasks)) {
+            return null;
+        }
+        List<Long> res = new ArrayList<>(tasks.size());
+        for (Long t : tasks) {
+            res.add(t);
+        }
+        return res;
     }
 
 
@@ -152,7 +186,7 @@ public class TimingContext {
         if (CollectionUtil.isEmpty(taskMap)) {
             return timingManagerStatusDto;
         }
-        for (Map.Entry<Long, BaseTask> entry : taskMap.entrySet()) {
+        for (Map.Entry<Long, BaseTimingTask> entry : taskMap.entrySet()) {
             timingManagerStatusDto.addTaskStatus(entry.getValue());
         }
         return timingManagerStatusDto;
@@ -163,9 +197,13 @@ public class TimingContext {
      *
      * @return
      */
-    public static String getStatusFmt() {
+    public static String getStatusFmt(boolean json) {
         TimingManagerStatusDto timingManagerStatusDto = getTaskStatusDto();
-        return timingManagerStatusDto.fmt();
+        if (json) {
+            return timingManagerStatusDto.fmtJson();
+        } else {
+            return timingManagerStatusDto.fmt();
+        }
     }
 
 }

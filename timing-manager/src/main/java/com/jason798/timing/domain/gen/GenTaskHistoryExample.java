@@ -105,192 +105,122 @@ public class GenTaskHistoryExample {
         }
 
         public Criteria andHtidIsNull() {
-            addCriterion("htid is null");
+            addCriterion("HTID is null");
             return (Criteria) this;
         }
 
         public Criteria andHtidIsNotNull() {
-            addCriterion("htid is not null");
+            addCriterion("HTID is not null");
             return (Criteria) this;
         }
 
         public Criteria andHtidEqualTo(Long value) {
-            addCriterion("htid =", value, "htid");
+            addCriterion("HTID =", value, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidNotEqualTo(Long value) {
-            addCriterion("htid <>", value, "htid");
+            addCriterion("HTID <>", value, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidGreaterThan(Long value) {
-            addCriterion("htid >", value, "htid");
+            addCriterion("HTID >", value, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidGreaterThanOrEqualTo(Long value) {
-            addCriterion("htid >=", value, "htid");
+            addCriterion("HTID >=", value, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidLessThan(Long value) {
-            addCriterion("htid <", value, "htid");
+            addCriterion("HTID <", value, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidLessThanOrEqualTo(Long value) {
-            addCriterion("htid <=", value, "htid");
+            addCriterion("HTID <=", value, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidIn(List<Long> values) {
-            addCriterion("htid in", values, "htid");
+            addCriterion("HTID in", values, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidNotIn(List<Long> values) {
-            addCriterion("htid not in", values, "htid");
+            addCriterion("HTID not in", values, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidBetween(Long value1, Long value2) {
-            addCriterion("htid between", value1, value2, "htid");
+            addCriterion("HTID between", value1, value2, "htid");
             return (Criteria) this;
         }
 
         public Criteria andHtidNotBetween(Long value1, Long value2) {
-            addCriterion("htid not between", value1, value2, "htid");
+            addCriterion("HTID not between", value1, value2, "htid");
             return (Criteria) this;
         }
 
         public Criteria andTidIsNull() {
-            addCriterion("tid is null");
+            addCriterion("TID is null");
             return (Criteria) this;
         }
 
         public Criteria andTidIsNotNull() {
-            addCriterion("tid is not null");
+            addCriterion("TID is not null");
             return (Criteria) this;
         }
 
         public Criteria andTidEqualTo(Long value) {
-            addCriterion("tid =", value, "tid");
+            addCriterion("TID =", value, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidNotEqualTo(Long value) {
-            addCriterion("tid <>", value, "tid");
+            addCriterion("TID <>", value, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidGreaterThan(Long value) {
-            addCriterion("tid >", value, "tid");
+            addCriterion("TID >", value, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidGreaterThanOrEqualTo(Long value) {
-            addCriterion("tid >=", value, "tid");
+            addCriterion("TID >=", value, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidLessThan(Long value) {
-            addCriterion("tid <", value, "tid");
+            addCriterion("TID <", value, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidLessThanOrEqualTo(Long value) {
-            addCriterion("tid <=", value, "tid");
+            addCriterion("TID <=", value, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidIn(List<Long> values) {
-            addCriterion("tid in", values, "tid");
+            addCriterion("TID in", values, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidNotIn(List<Long> values) {
-            addCriterion("tid not in", values, "tid");
+            addCriterion("TID not in", values, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidBetween(Long value1, Long value2) {
-            addCriterion("tid between", value1, value2, "tid");
+            addCriterion("TID between", value1, value2, "tid");
             return (Criteria) this;
         }
 
         public Criteria andTidNotBetween(Long value1, Long value2) {
-            addCriterion("tid not between", value1, value2, "tid");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNull() {
-            addCriterion("TYPE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNotNull() {
-            addCriterion("TYPE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeEqualTo(String value) {
-            addCriterion("TYPE =", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotEqualTo(String value) {
-            addCriterion("TYPE <>", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThan(String value) {
-            addCriterion("TYPE >", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("TYPE >=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThan(String value) {
-            addCriterion("TYPE <", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThanOrEqualTo(String value) {
-            addCriterion("TYPE <=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLike(String value) {
-            addCriterion("TYPE like", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotLike(String value) {
-            addCriterion("TYPE not like", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIn(List<String> values) {
-            addCriterion("TYPE in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotIn(List<String> values) {
-            addCriterion("TYPE not in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeBetween(String value1, String value2) {
-            addCriterion("TYPE between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotBetween(String value1, String value2) {
-            addCriterion("TYPE not between", value1, value2, "type");
+            addCriterion("TID not between", value1, value2, "tid");
             return (Criteria) this;
         }
 
@@ -751,11 +681,6 @@ public class GenTaskHistoryExample {
 
         public Criteria andMemoNotBetween(String value1, String value2) {
             addCriterion("MEMO not between", value1, value2, "memo");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLikeInsensitive(String value) {
-            addCriterion("upper(TYPE) like", value.toUpperCase(), "type");
             return (Criteria) this;
         }
 

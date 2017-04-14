@@ -3,9 +3,9 @@
 <mapper namespace="com.jason798.timing.mapper.gen.GenTaskManagerMapper">
   <resultMap id="BaseResultMap" type="com.jason798.timing.domain.gen.GenTaskManager">
     <id column="MID" jdbcType="BIGINT" property="mid" />
-    <result column="NAME" jdbcType="VARCHAR" property="name" />
-    <result column="ALIVE_TM" jdbcType="BIGINT" property="aliveTm" />
-    <result column="LAST_UPDATE_TM" jdbcType="BIGINT" property="lastUpdateTm" />
+    <data column="NAME" jdbcType="VARCHAR" property="name" />
+    <data column="ALIVE_TM" jdbcType="BIGINT" property="aliveTm" />
+    <data column="LAST_UPDATE_TM" jdbcType="BIGINT" property="lastUpdateTm" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

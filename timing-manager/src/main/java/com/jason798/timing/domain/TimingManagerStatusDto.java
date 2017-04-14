@@ -3,7 +3,8 @@ package com.jason798.timing.domain;
 
 import com.jason798.collection.CollectionUtil;
 import com.jason798.common.DateUtil;
-import com.jason798.timing.task.BaseTask;
+import com.jason798.json.JSONFastJsonUtil;
+import com.jason798.timing.task.BaseTimingTask;
 import com.jason798.timing.task.DelayTask;
 import com.jason798.timing.task.FixRateCondTask;
 
@@ -30,6 +31,13 @@ public class TimingManagerStatusDto implements Serializable {
     public TimingManagerStatusDto() {
     }
 
+    public String fmtJson(){
+        if (CollectionUtil.isEmpty(taskStatusDtoMap)) {
+            return "";
+        }
+        return JSONFastJsonUtil.objectToJson(taskStatusDtoMap);
+    }
+
     public String fmt() {
         StringBuilder sb = new StringBuilder();
         if (CollectionUtil.isEmpty(taskStatusDtoMap)) {
@@ -38,30 +46,32 @@ public class TimingManagerStatusDto implements Serializable {
         sb.append("timing tasks count[").append(taskCount).append("]:").append("\n");
         for (Map.Entry<String, TaskStatusDto> entry : taskStatusDtoMap.entrySet()) {
             TaskStatusDto task = entry.getValue();
-            sb.append("tid ").append(task.getTid()).append(",");
-            sb.append("tkey ").append(task.getTkey()).append(",");
-            sb.append("type ").append(task.getType()).append(",");
+            sb.append("TID ").append(task.getTid()).append(",");
+            sb.append("KEY ").append(task.getTkey()).append(",");
+            sb.append("TP ").append(task.getType()).append(",");
+            sb.append("CNT ").append(task.getRunnedCounter()).append(",");
 
-            sb.append("LastStart ").append(task.getLastStartTm()).append(",");
-            sb.append("LastStop ").append(task.getLastStopTm()).append(",");
 
-            sb.append("dealy ").append(task.getDelay()).append(",");
-            sb.append("interval ").append(task.getInterval()).append(",");
-            sb.append("isRunning ").append(task.isRunning()).append(",");
+            sb.append("LStart ").append(task.getLastStartTm()).append(",");
+            sb.append("LStop ").append(task.getLastStopTm()).append(",");
+
+            sb.append("DELAY ").append(task.getDelay()).append(",");
+            sb.append("INTVL ").append(task.getInterval()).append(",");
+
 
             if(task.getMaxRunCount()!=null){
-                sb.append("RunMax ").append(task.getMaxRunCount()).append(",");
+                sb.append("MAX ").append(task.getMaxRunCount()).append(",");
             }
 
             if(task.getCond()!=null) {
-                sb.append("cond ").append(task.getCond()).append(",");
+                sb.append("COND ").append(task.getCond()).append(",");
             }
 
-            if (task.isRunned() != null) {
-                sb.append("Runned ").append(task.isRunned()).append(",");
+            if (task.isEnd() != null) {
+                sb.append("END ").append(task.isEnd()).append(",");
             }
 
-            sb.append("RunCnt ").append(task.getRunnedCounter()).append("\n");
+            sb.append("EXE ").append(task.isRunning()).append("\n");
 
         }
         return sb.toString();
@@ -70,7 +80,7 @@ public class TimingManagerStatusDto implements Serializable {
     /**
      * @param task
      */
-    public void addTaskStatus(BaseTask task) {
+    public void addTaskStatus(BaseTimingTask task) {
         TaskStatusDto statusDto = new TaskStatusDto();
         Long taskId = task.getTid();
         String key = task.getKey();
@@ -84,28 +94,31 @@ public class TimingManagerStatusDto implements Serializable {
         statusDto.setDelay(task.getDelayTime());
         statusDto.setInterval(task.getInterval());
 
-        if (task instanceof DelayTask) {
-            DelayTask dtask = (DelayTask) task;
-            statusDto.setRunned(dtask.isRunned());
-        } else {
-            statusDto.setRunned(null);
+        if(task instanceof DelayTask) {
+            statusDto.setEnd(task.isEnd());
         }
-
 
         if(task instanceof FixRateCondTask){
             FixRateCondTask fc = (FixRateCondTask) task;
-            statusDto.setCond(fc.getCond());
             statusDto.setMaxRunCount(fc.getMaxTime());
-            //statusDto.set
         }
 
-        statusDto.setLastStartTm(DateUtil.formatDefault(DateUtil.tsms2Date(task.getLastStartTime())));
-        statusDto.setLastStopTm(DateUtil.formatDefault(DateUtil.tsms2Date(task.getLastStopTime())));
+        Long lastStart = task.getLastStartTime();
+        Long lastStop = task.getLastStopTime();
+        if( lastStart!=null) {
+//            statusDto.setLastStartTm(DateUtil.formatDefaultShort(DateUtil.tsms2Date(task.getLastStartTime())));
+        }
+        if(lastStop!=null) {
+//            statusDto.setLastStopTm(DateUtil.formatDefaultShort(DateUtil.tsms2Date(task.getLastStopTime())));
+        }
+
+        if(lastStart!=null && lastStop!=null) {
+            long ssInterval = Math.abs(task.getLastStartTime() - task.getLastStopTime());
+            statusDto.setStartStopInterval(ssInterval);
+        }
 
         statusDto.setRunning(task.isRunning());
 
-        long ssInterval = Math.abs(task.getLastStartTime() - task.getLastStopTime());
-        statusDto.setStartStopInterval(ssInterval);
         taskStatusDtoMap.put(key, statusDto);
     }
 

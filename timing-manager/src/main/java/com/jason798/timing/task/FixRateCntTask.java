@@ -1,9 +1,10 @@
 package com.jason798.timing.task;
 
 
-import com.jason798.timing.TimingCoreHelper;
-import com.jason798.timing.api.ITimingTask;
+import com.jason798.timing.TimingInnerManager;
 import com.jason798.timing.domain.TaskEnum;
+
+import java.lang.reflect.Method;
 
 /**
  * fix rate execute N times task
@@ -13,35 +14,29 @@ import com.jason798.timing.domain.TaskEnum;
 public class FixRateCntTask extends FixRateTask {
     protected Long maxTime = 1L;
 
-    public FixRateCntTask(Long tid, TimingCoreHelper helper){
-        super(tid,helper);
+    /**
+     * constructor
+     *
+     * @param tid
+     * @param helper
+     * @param target
+     * @param method
+     */
+    public FixRateCntTask(Long tid, TimingInnerManager helper, Object target, Method method) {
+        super(tid, helper, target, method);
     }
-    public FixRateCntTask(Long tid, TimingCoreHelper helper, ITimingTask service, Long maxTime) {
-        super(tid,helper);
+
+    public FixRateCntTask(Long tid, TimingInnerManager helper, Object target, Method exe, Long maxTime) {
+        super(tid,helper,target,exe);
         this.type = TaskEnum.FIXRATECNT;
-        this.service = service;
         this.maxTime = maxTime;
     }
 
     @Override
-    public void before() {
-        super.before();
-    }
-
-    @Override
-    public void execute() {
-        service.execute();
-    }
-
-    @Override
     public void after() {
-        System.out.println("FixRateCntTask end bf");
         super.after();
-        System.out.println("FixRateCntTask end af "+runnedCounter+","+maxTime);
         if(runnedCounter == maxTime){
-            timingCoreHelper.cancelTask(tid);
             this.end = true;
-            return;
         }
     }
 

@@ -72,12 +72,12 @@
 			<version>1.3.1</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>com.jason798</groupId>
 			<artifactId>toolbox</artifactId>
 			<version>1.4.0</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -92,5 +92,7 @@
 	<modules>
 		<module>timing-manager</module>
 		<module>spring-common</module>
+		<module>redis-service</module>
+		<module>redis-admin</module>
 	</modules>
 </project>

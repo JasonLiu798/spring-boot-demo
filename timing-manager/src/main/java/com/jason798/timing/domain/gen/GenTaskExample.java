@@ -234,73 +234,143 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameIsNull() {
-            addCriterion("SERVICE_NAME is null");
+        public Criteria andTserviceIsNull() {
+            addCriterion("TSERVICE is null");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameIsNotNull() {
-            addCriterion("SERVICE_NAME is not null");
+        public Criteria andTserviceIsNotNull() {
+            addCriterion("TSERVICE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameEqualTo(String value) {
-            addCriterion("SERVICE_NAME =", value, "serviceName");
+        public Criteria andTserviceEqualTo(String value) {
+            addCriterion("TSERVICE =", value, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameNotEqualTo(String value) {
-            addCriterion("SERVICE_NAME <>", value, "serviceName");
+        public Criteria andTserviceNotEqualTo(String value) {
+            addCriterion("TSERVICE <>", value, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameGreaterThan(String value) {
-            addCriterion("SERVICE_NAME >", value, "serviceName");
+        public Criteria andTserviceGreaterThan(String value) {
+            addCriterion("TSERVICE >", value, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameGreaterThanOrEqualTo(String value) {
-            addCriterion("SERVICE_NAME >=", value, "serviceName");
+        public Criteria andTserviceGreaterThanOrEqualTo(String value) {
+            addCriterion("TSERVICE >=", value, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameLessThan(String value) {
-            addCriterion("SERVICE_NAME <", value, "serviceName");
+        public Criteria andTserviceLessThan(String value) {
+            addCriterion("TSERVICE <", value, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameLessThanOrEqualTo(String value) {
-            addCriterion("SERVICE_NAME <=", value, "serviceName");
+        public Criteria andTserviceLessThanOrEqualTo(String value) {
+            addCriterion("TSERVICE <=", value, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameLike(String value) {
-            addCriterion("SERVICE_NAME like", value, "serviceName");
+        public Criteria andTserviceLike(String value) {
+            addCriterion("TSERVICE like", value, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameNotLike(String value) {
-            addCriterion("SERVICE_NAME not like", value, "serviceName");
+        public Criteria andTserviceNotLike(String value) {
+            addCriterion("TSERVICE not like", value, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameIn(List<String> values) {
-            addCriterion("SERVICE_NAME in", values, "serviceName");
+        public Criteria andTserviceIn(List<String> values) {
+            addCriterion("TSERVICE in", values, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameNotIn(List<String> values) {
-            addCriterion("SERVICE_NAME not in", values, "serviceName");
+        public Criteria andTserviceNotIn(List<String> values) {
+            addCriterion("TSERVICE not in", values, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameBetween(String value1, String value2) {
-            addCriterion("SERVICE_NAME between", value1, value2, "serviceName");
+        public Criteria andTserviceBetween(String value1, String value2) {
+            addCriterion("TSERVICE between", value1, value2, "tservice");
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameNotBetween(String value1, String value2) {
-            addCriterion("SERVICE_NAME not between", value1, value2, "serviceName");
+        public Criteria andTserviceNotBetween(String value1, String value2) {
+            addCriterion("TSERVICE not between", value1, value2, "tservice");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamIsNull() {
+            addCriterion("PARAM is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamIsNotNull() {
+            addCriterion("PARAM is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamEqualTo(String value) {
+            addCriterion("PARAM =", value, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNotEqualTo(String value) {
+            addCriterion("PARAM <>", value, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamGreaterThan(String value) {
+            addCriterion("PARAM >", value, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamGreaterThanOrEqualTo(String value) {
+            addCriterion("PARAM >=", value, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamLessThan(String value) {
+            addCriterion("PARAM <", value, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamLessThanOrEqualTo(String value) {
+            addCriterion("PARAM <=", value, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamLike(String value) {
+            addCriterion("PARAM like", value, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNotLike(String value) {
+            addCriterion("PARAM not like", value, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamIn(List<String> values) {
+            addCriterion("PARAM in", values, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNotIn(List<String> values) {
+            addCriterion("PARAM not in", values, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamBetween(String value1, String value2) {
+            addCriterion("PARAM between", value1, value2, "param");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNotBetween(String value1, String value2) {
+            addCriterion("PARAM not between", value1, value2, "param");
             return (Criteria) this;
         }
 
@@ -694,143 +764,73 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndIsNull() {
-            addCriterion("STATUS_END is null");
+        public Criteria andTmutexIsNull() {
+            addCriterion("TMUTEX is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndIsNotNull() {
-            addCriterion("STATUS_END is not null");
+        public Criteria andTmutexIsNotNull() {
+            addCriterion("TMUTEX is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndEqualTo(String value) {
-            addCriterion("STATUS_END =", value, "statusEnd");
+        public Criteria andTmutexEqualTo(String value) {
+            addCriterion("TMUTEX =", value, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndNotEqualTo(String value) {
-            addCriterion("STATUS_END <>", value, "statusEnd");
+        public Criteria andTmutexNotEqualTo(String value) {
+            addCriterion("TMUTEX <>", value, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndGreaterThan(String value) {
-            addCriterion("STATUS_END >", value, "statusEnd");
+        public Criteria andTmutexGreaterThan(String value) {
+            addCriterion("TMUTEX >", value, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndGreaterThanOrEqualTo(String value) {
-            addCriterion("STATUS_END >=", value, "statusEnd");
+        public Criteria andTmutexGreaterThanOrEqualTo(String value) {
+            addCriterion("TMUTEX >=", value, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndLessThan(String value) {
-            addCriterion("STATUS_END <", value, "statusEnd");
+        public Criteria andTmutexLessThan(String value) {
+            addCriterion("TMUTEX <", value, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndLessThanOrEqualTo(String value) {
-            addCriterion("STATUS_END <=", value, "statusEnd");
+        public Criteria andTmutexLessThanOrEqualTo(String value) {
+            addCriterion("TMUTEX <=", value, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndLike(String value) {
-            addCriterion("STATUS_END like", value, "statusEnd");
+        public Criteria andTmutexLike(String value) {
+            addCriterion("TMUTEX like", value, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndNotLike(String value) {
-            addCriterion("STATUS_END not like", value, "statusEnd");
+        public Criteria andTmutexNotLike(String value) {
+            addCriterion("TMUTEX not like", value, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndIn(List<String> values) {
-            addCriterion("STATUS_END in", values, "statusEnd");
+        public Criteria andTmutexIn(List<String> values) {
+            addCriterion("TMUTEX in", values, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndNotIn(List<String> values) {
-            addCriterion("STATUS_END not in", values, "statusEnd");
+        public Criteria andTmutexNotIn(List<String> values) {
+            addCriterion("TMUTEX not in", values, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndBetween(String value1, String value2) {
-            addCriterion("STATUS_END between", value1, value2, "statusEnd");
+        public Criteria andTmutexBetween(String value1, String value2) {
+            addCriterion("TMUTEX between", value1, value2, "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndNotBetween(String value1, String value2) {
-            addCriterion("STATUS_END not between", value1, value2, "statusEnd");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexIsNull() {
-            addCriterion("MUTEX is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexIsNotNull() {
-            addCriterion("MUTEX is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexEqualTo(String value) {
-            addCriterion("MUTEX =", value, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexNotEqualTo(String value) {
-            addCriterion("MUTEX <>", value, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexGreaterThan(String value) {
-            addCriterion("MUTEX >", value, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexGreaterThanOrEqualTo(String value) {
-            addCriterion("MUTEX >=", value, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexLessThan(String value) {
-            addCriterion("MUTEX <", value, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexLessThanOrEqualTo(String value) {
-            addCriterion("MUTEX <=", value, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexLike(String value) {
-            addCriterion("MUTEX like", value, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexNotLike(String value) {
-            addCriterion("MUTEX not like", value, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexIn(List<String> values) {
-            addCriterion("MUTEX in", values, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexNotIn(List<String> values) {
-            addCriterion("MUTEX not in", values, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexBetween(String value1, String value2) {
-            addCriterion("MUTEX between", value1, value2, "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andMutexNotBetween(String value1, String value2) {
-            addCriterion("MUTEX not between", value1, value2, "mutex");
+        public Criteria andTmutexNotBetween(String value1, String value2) {
+            addCriterion("TMUTEX not between", value1, value2, "tmutex");
             return (Criteria) this;
         }
 
@@ -894,73 +894,73 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("STATUS is null");
+        public Criteria andTstatusIsNull() {
+            addCriterion("TSTATUS is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("STATUS is not null");
+        public Criteria andTstatusIsNotNull() {
+            addCriterion("TSTATUS is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(String value) {
-            addCriterion("STATUS =", value, "status");
+        public Criteria andTstatusEqualTo(String value) {
+            addCriterion("TSTATUS =", value, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(String value) {
-            addCriterion("STATUS <>", value, "status");
+        public Criteria andTstatusNotEqualTo(String value) {
+            addCriterion("TSTATUS <>", value, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(String value) {
-            addCriterion("STATUS >", value, "status");
+        public Criteria andTstatusGreaterThan(String value) {
+            addCriterion("TSTATUS >", value, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(String value) {
-            addCriterion("STATUS >=", value, "status");
+        public Criteria andTstatusGreaterThanOrEqualTo(String value) {
+            addCriterion("TSTATUS >=", value, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(String value) {
-            addCriterion("STATUS <", value, "status");
+        public Criteria andTstatusLessThan(String value) {
+            addCriterion("TSTATUS <", value, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(String value) {
-            addCriterion("STATUS <=", value, "status");
+        public Criteria andTstatusLessThanOrEqualTo(String value) {
+            addCriterion("TSTATUS <=", value, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLike(String value) {
-            addCriterion("STATUS like", value, "status");
+        public Criteria andTstatusLike(String value) {
+            addCriterion("TSTATUS like", value, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotLike(String value) {
-            addCriterion("STATUS not like", value, "status");
+        public Criteria andTstatusNotLike(String value) {
+            addCriterion("TSTATUS not like", value, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<String> values) {
-            addCriterion("STATUS in", values, "status");
+        public Criteria andTstatusIn(List<String> values) {
+            addCriterion("TSTATUS in", values, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<String> values) {
-            addCriterion("STATUS not in", values, "status");
+        public Criteria andTstatusNotIn(List<String> values) {
+            addCriterion("TSTATUS not in", values, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(String value1, String value2) {
-            addCriterion("STATUS between", value1, value2, "status");
+        public Criteria andTstatusBetween(String value1, String value2) {
+            addCriterion("TSTATUS between", value1, value2, "tstatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(String value1, String value2) {
-            addCriterion("STATUS not between", value1, value2, "status");
+        public Criteria andTstatusNotBetween(String value1, String value2) {
+            addCriterion("TSTATUS not between", value1, value2, "tstatus");
             return (Criteria) this;
         }
 
@@ -1099,8 +1099,13 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andServiceNameLikeInsensitive(String value) {
-            addCriterion("upper(SERVICE_NAME) like", value.toUpperCase(), "serviceName");
+        public Criteria andTserviceLikeInsensitive(String value) {
+            addCriterion("upper(TSERVICE) like", value.toUpperCase(), "tservice");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamLikeInsensitive(String value) {
+            addCriterion("upper(PARAM) like", value.toUpperCase(), "param");
             return (Criteria) this;
         }
 
@@ -1119,18 +1124,13 @@ public class GenTaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEndLikeInsensitive(String value) {
-            addCriterion("upper(STATUS_END) like", value.toUpperCase(), "statusEnd");
+        public Criteria andTmutexLikeInsensitive(String value) {
+            addCriterion("upper(TMUTEX) like", value.toUpperCase(), "tmutex");
             return (Criteria) this;
         }
 
-        public Criteria andMutexLikeInsensitive(String value) {
-            addCriterion("upper(MUTEX) like", value.toUpperCase(), "mutex");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusLikeInsensitive(String value) {
-            addCriterion("upper(STATUS) like", value.toUpperCase(), "status");
+        public Criteria andTstatusLikeInsensitive(String value) {
+            addCriterion("upper(TSTATUS) like", value.toUpperCase(), "tstatus");
             return (Criteria) this;
         }
 

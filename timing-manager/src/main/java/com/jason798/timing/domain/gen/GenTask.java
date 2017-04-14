@@ -7,7 +7,9 @@ public class GenTask implements Serializable {
 
     private String tkey;
 
-    private String serviceName;
+    private String tservice;
+
+    private String param;
 
     private String confType;
 
@@ -21,13 +23,11 @@ public class GenTask implements Serializable {
 
     private String processor;
 
-    private String statusEnd;
-
-    private String mutex;
+    private String tmutex;
 
     private Long mutexTm;
 
-    private String status;
+    private String tstatus;
 
     private Long aliveTm;
 
@@ -51,12 +51,20 @@ public class GenTask implements Serializable {
         this.tkey = tkey == null ? null : tkey.trim();
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public String getTservice() {
+        return tservice;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName == null ? null : serviceName.trim();
+    public void setTservice(String tservice) {
+        this.tservice = tservice == null ? null : tservice.trim();
+    }
+
+    public String getParam() {
+        return param;
+    }
+
+    public void setParam(String param) {
+        this.param = param == null ? null : param.trim();
     }
 
     public String getConfType() {
@@ -107,20 +115,12 @@ public class GenTask implements Serializable {
         this.processor = processor == null ? null : processor.trim();
     }
 
-    public String getStatusEnd() {
-        return statusEnd;
+    public String getTmutex() {
+        return tmutex;
     }
 
-    public void setStatusEnd(String statusEnd) {
-        this.statusEnd = statusEnd == null ? null : statusEnd.trim();
-    }
-
-    public String getMutex() {
-        return mutex;
-    }
-
-    public void setMutex(String mutex) {
-        this.mutex = mutex == null ? null : mutex.trim();
+    public void setTmutex(String tmutex) {
+        this.tmutex = tmutex == null ? null : tmutex.trim();
     }
 
     public Long getMutexTm() {
@@ -131,12 +131,12 @@ public class GenTask implements Serializable {
         this.mutexTm = mutexTm;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTstatus() {
+        return tstatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setTstatus(String tstatus) {
+        this.tstatus = tstatus == null ? null : tstatus.trim();
     }
 
     public Long getAliveTm() {
