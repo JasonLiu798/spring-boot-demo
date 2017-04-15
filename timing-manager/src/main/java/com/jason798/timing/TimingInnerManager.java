@@ -1,10 +1,19 @@
 package com.jason798.timing;
 
+import com.jason798.character.StringCheckUtil;
+import com.jason798.collection.CollectionUtil;
+import com.jason798.common.CommonConstant;
 import com.jason798.common.DevContext;
+import com.jason798.common.ReflectUtil;
+import com.jason798.config.ConfigService;
+import com.jason798.timing.api.RespDto;
+import com.jason798.timing.api.RetCode;
 import com.jason798.timing.api.TimingException;
 import com.jason798.timing.api.TimingManager;
+import com.jason798.timing.dao.TimingDbHelper;
 import com.jason798.timing.domain.TimingConstant;
-import com.jason798.timing.task.CronTask;
+import com.jason798.timing.domain.gen.GenTask;
+import com.jason798.timing.task.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,9 +33,9 @@ import java.util.concurrent.TimeUnit;
 public class TimingInnerManager {
     private static Logger LOG = LoggerFactory.getLogger(TimingInnerManager.class);
     @Resource
-    DictService dictService;
+	ConfigService configService;
     @Resource
-    TimingDbHelper timingDbHelper;
+	TimingDbHelper timingDbHelper;
     @Resource
     TimingManager timingManager;
 
@@ -39,7 +48,7 @@ public class TimingInnerManager {
         managerStatus = TimingConstant.MANAGER_STATUS_STARTING;
         int poolSize = TimingConstant.DFT_POOL_SIZE;
         try {
-            poolSize = dictService.getIntValueByPathKey(TimingConstant.POOL_SIZE_PK, TimingConstant.DFT_POOL_SIZE);
+            poolSize = configService.getIntValueByKey(TimingConstant.POOL_SIZE_PK, TimingConstant.DFT_POOL_SIZE);
         } catch (Exception e) {
             LOG.error("get pool size error,use {}", poolSize);
             poolSize = TimingConstant.DFT_POOL_SIZE;
@@ -391,11 +400,4 @@ public class TimingInnerManager {
         return TimingContext.cancleTask(tid);
     }
 
-    public DictService getDictService() {
-        return dictService;
-    }
-
-    public void setDictService(DictService dictService) {
-        this.dictService = dictService;
-    }
 }

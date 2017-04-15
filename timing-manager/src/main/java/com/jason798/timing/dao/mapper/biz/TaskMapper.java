@@ -1,4 +1,4 @@
-package com.jason798.timing.mapper.biz;
+package com.jason798.timing.dao.mapper.biz;
 
 import com.jason798.timing.domain.TaskDomain;
 import org.apache.ibatis.annotations.Param;

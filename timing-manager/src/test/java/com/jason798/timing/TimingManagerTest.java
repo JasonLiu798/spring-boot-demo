@@ -1,6 +1,10 @@
 package com.jason798.timing;
 
+import com.jason798.common.SystemUtil;
+import com.jason798.json.JSONFastJsonUtil;
 import com.jason798.timing.api.RetCode;
+import com.jason798.timing.api.TimingManager;
+import com.jason798.timing.domain.TimingConstant;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
@@ -22,7 +26,7 @@ import java.util.concurrent.Executors;
 public class TimingManagerTest {
 
     @Autowired
-    private TimingManagerImpl timingManager;
+    private TimingManager timingManager;
 
     @Test
     public void testExecCronTask() {
@@ -65,10 +69,10 @@ public class TimingManagerTest {
 
     public static class T1 implements Runnable {
         private CountDownLatch latch;
-        private TimingManagerImpl tm;
+        private TimingManager tm;
         private String key;
 
-        public T1(String key, TimingManagerImpl manager, CountDownLatch latch) {
+        public T1(String key, TimingManager manager, CountDownLatch latch) {
             this.key = key;
             this.tm = manager;
             this.latch = latch;
@@ -106,7 +110,6 @@ public class TimingManagerTest {
         timingManager.init();
 
         TimingConstant.NOT_ALIVE_INTERVAL = 5L;
-        //TimingConstant.MUTEX_INTERVAL;
 
 
         RetCode res = timingManager.execCronTask(1L);

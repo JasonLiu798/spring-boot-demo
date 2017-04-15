@@ -1,6 +1,13 @@
 package com.jason798.timing;
 
+import com.jason798.character.StringCheckUtil;
+import com.jason798.common.CommonConstant;
 import com.jason798.common.DateUtil;
+import com.jason798.log.LogClient;
+import com.jason798.log.LogConstant;
+import com.jason798.timing.dao.TimingDbHelper;
+import com.jason798.timing.domain.TimingConstant;
+import com.jason798.timing.domain.gen.GenTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -25,7 +32,7 @@ public class TimingLockHelper {
     @Resource
     TimingCommonHelper timingCommonHelper;
     @Resource
-    TimingDbHelper timingDbHelper;
+	TimingDbHelper timingDbHelper;
 
     /**
      * is having lock

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jason798.timing.mapper.gen.GenTaskMapper">
+<mapper namespace="com.jason798.timing.dao.mapper.gen.GenTaskMapper">
   <resultMap id="BaseResultMap" type="com.jason798.timing.domain.gen.GenTask">
     <id column="TID" jdbcType="BIGINT" property="tid" />
-    <data column="TKEY" jdbcType="VARCHAR" property="tkey" />
-    <data column="SERVICE_NAME" jdbcType="VARCHAR" property="serviceName" />
-    <data column="CONF_TYPE" jdbcType="VARCHAR" property="confType" />
-    <data column="CONF_CRON_EXPRESSION" jdbcType="VARCHAR" property="confCronExpression" />
-    <data column="CONF_DELAY_TM" jdbcType="BIGINT" property="confDelayTm" />
-    <data column="CONF_INTERVAL_TM" jdbcType="BIGINT" property="confIntervalTm" />
-    <data column="CONF_EXE_TIMES" jdbcType="BIGINT" property="confExeTimes" />
-    <data column="PROCESSOR" jdbcType="VARCHAR" property="processor" />
-    <data column="STATUS_END" jdbcType="CHAR" property="statusEnd" />
-    <data column="MUTEX" jdbcType="CHAR" property="mutex" />
-    <data column="MUTEX_TM" jdbcType="BIGINT" property="mutexTm" />
-    <data column="STATUS" jdbcType="CHAR" property="status" />
-    <data column="ALIVE_TM" jdbcType="BIGINT" property="aliveTm" />
-    <data column="VALID" jdbcType="CHAR" property="valid" />
+    <result column="TKEY" jdbcType="VARCHAR" property="tkey" />
+    <result column="TSERVICE" jdbcType="VARCHAR" property="tservice" />
+    <result column="PARAM" jdbcType="VARCHAR" property="param" />
+    <result column="CONF_TYPE" jdbcType="VARCHAR" property="confType" />
+    <result column="CONF_CRON_EXPRESSION" jdbcType="VARCHAR" property="confCronExpression" />
+    <result column="CONF_DELAY_TM" jdbcType="BIGINT" property="confDelayTm" />
+    <result column="CONF_INTERVAL_TM" jdbcType="BIGINT" property="confIntervalTm" />
+    <result column="CONF_EXE_TIMES" jdbcType="BIGINT" property="confExeTimes" />
+    <result column="PROCESSOR" jdbcType="VARCHAR" property="processor" />
+    <result column="TMUTEX" jdbcType="CHAR" property="tmutex" />
+    <result column="MUTEX_TM" jdbcType="BIGINT" property="mutexTm" />
+    <result column="TSTATUS" jdbcType="CHAR" property="tstatus" />
+    <result column="ALIVE_TM" jdbcType="BIGINT" property="aliveTm" />
+    <result column="VALID" jdbcType="CHAR" property="valid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -77,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    TID, TKEY, SERVICE_NAME, CONF_TYPE, CONF_CRON_EXPRESSION, CONF_DELAY_TM, CONF_INTERVAL_TM, 
-    CONF_EXE_TIMES, PROCESSOR, STATUS_END, MUTEX, MUTEX_TM, STATUS, ALIVE_TM, VALID
+    TID, TKEY, TSERVICE, PARAM, CONF_TYPE, CONF_CRON_EXPRESSION, CONF_DELAY_TM, CONF_INTERVAL_TM, 
+    CONF_EXE_TIMES, PROCESSOR, TMUTEX, MUTEX_TM, TSTATUS, ALIVE_TM, VALID
   </sql>
   <select id="selectByExample" parameterType="com.jason798.timing.domain.gen.GenTaskExample" resultMap="BaseResultMap">
     select
@@ -101,16 +101,16 @@
     where TID = #{tid,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.jason798.timing.domain.gen.GenTask">
-    insert into ts_task (TID, TKEY, SERVICE_NAME, 
-      CONF_TYPE, CONF_CRON_EXPRESSION, CONF_DELAY_TM, 
-      CONF_INTERVAL_TM, CONF_EXE_TIMES, PROCESSOR, 
-      STATUS_END, MUTEX, MUTEX_TM, 
-      STATUS, ALIVE_TM, VALID)
-    values (#{tid,jdbcType=BIGINT}, #{tkey,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR}, 
-      #{confType,jdbcType=VARCHAR}, #{confCronExpression,jdbcType=VARCHAR}, #{confDelayTm,jdbcType=BIGINT}, 
-      #{confIntervalTm,jdbcType=BIGINT}, #{confExeTimes,jdbcType=BIGINT}, #{processor,jdbcType=VARCHAR}, 
-      #{statusEnd,jdbcType=CHAR}, #{mutex,jdbcType=CHAR}, #{mutexTm,jdbcType=BIGINT}, 
-      #{status,jdbcType=CHAR}, #{aliveTm,jdbcType=BIGINT}, #{valid,jdbcType=CHAR})
+    insert into ts_task (TID, TKEY, TSERVICE, 
+      PARAM, CONF_TYPE, CONF_CRON_EXPRESSION, 
+      CONF_DELAY_TM, CONF_INTERVAL_TM, CONF_EXE_TIMES, 
+      PROCESSOR, TMUTEX, MUTEX_TM, 
+      TSTATUS, ALIVE_TM, VALID)
+    values (#{tid,jdbcType=BIGINT}, #{tkey,jdbcType=VARCHAR}, #{tservice,jdbcType=VARCHAR}, 
+      #{param,jdbcType=VARCHAR}, #{confType,jdbcType=VARCHAR}, #{confCronExpression,jdbcType=VARCHAR}, 
+      #{confDelayTm,jdbcType=BIGINT}, #{confIntervalTm,jdbcType=BIGINT}, #{confExeTimes,jdbcType=BIGINT}, 
+      #{processor,jdbcType=VARCHAR}, #{tmutex,jdbcType=CHAR}, #{mutexTm,jdbcType=BIGINT}, 
+      #{tstatus,jdbcType=CHAR}, #{aliveTm,jdbcType=BIGINT}, #{valid,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jason798.timing.domain.gen.GenTask">
     insert into ts_task
@@ -121,8 +121,11 @@
       <if test="tkey != null">
         TKEY,
       </if>
-      <if test="serviceName != null">
-        SERVICE_NAME,
+      <if test="tservice != null">
+        TSERVICE,
+      </if>
+      <if test="param != null">
+        PARAM,
       </if>
       <if test="confType != null">
         CONF_TYPE,
@@ -142,17 +145,14 @@
       <if test="processor != null">
         PROCESSOR,
       </if>
-      <if test="statusEnd != null">
-        STATUS_END,
-      </if>
-      <if test="mutex != null">
-        MUTEX,
+      <if test="tmutex != null">
+        TMUTEX,
       </if>
       <if test="mutexTm != null">
         MUTEX_TM,
       </if>
-      <if test="status != null">
-        STATUS,
+      <if test="tstatus != null">
+        TSTATUS,
       </if>
       <if test="aliveTm != null">
         ALIVE_TM,
@@ -168,8 +168,11 @@
       <if test="tkey != null">
         #{tkey,jdbcType=VARCHAR},
       </if>
-      <if test="serviceName != null">
-        #{serviceName,jdbcType=VARCHAR},
+      <if test="tservice != null">
+        #{tservice,jdbcType=VARCHAR},
+      </if>
+      <if test="param != null">
+        #{param,jdbcType=VARCHAR},
       </if>
       <if test="confType != null">
         #{confType,jdbcType=VARCHAR},
@@ -189,17 +192,14 @@
       <if test="processor != null">
         #{processor,jdbcType=VARCHAR},
       </if>
-      <if test="statusEnd != null">
-        #{statusEnd,jdbcType=CHAR},
-      </if>
-      <if test="mutex != null">
-        #{mutex,jdbcType=CHAR},
+      <if test="tmutex != null">
+        #{tmutex,jdbcType=CHAR},
       </if>
       <if test="mutexTm != null">
         #{mutexTm,jdbcType=BIGINT},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=CHAR},
+      <if test="tstatus != null">
+        #{tstatus,jdbcType=CHAR},
       </if>
       <if test="aliveTm != null">
         #{aliveTm,jdbcType=BIGINT},
@@ -224,8 +224,11 @@
       <if test="record.tkey != null">
         TKEY = #{record.tkey,jdbcType=VARCHAR},
       </if>
-      <if test="record.serviceName != null">
-        SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+      <if test="record.tservice != null">
+        TSERVICE = #{record.tservice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param != null">
+        PARAM = #{record.param,jdbcType=VARCHAR},
       </if>
       <if test="record.confType != null">
         CONF_TYPE = #{record.confType,jdbcType=VARCHAR},
@@ -245,17 +248,14 @@
       <if test="record.processor != null">
         PROCESSOR = #{record.processor,jdbcType=VARCHAR},
       </if>
-      <if test="record.statusEnd != null">
-        STATUS_END = #{record.statusEnd,jdbcType=CHAR},
-      </if>
-      <if test="record.mutex != null">
-        MUTEX = #{record.mutex,jdbcType=CHAR},
+      <if test="record.tmutex != null">
+        TMUTEX = #{record.tmutex,jdbcType=CHAR},
       </if>
       <if test="record.mutexTm != null">
         MUTEX_TM = #{record.mutexTm,jdbcType=BIGINT},
       </if>
-      <if test="record.status != null">
-        STATUS = #{record.status,jdbcType=CHAR},
+      <if test="record.tstatus != null">
+        TSTATUS = #{record.tstatus,jdbcType=CHAR},
       </if>
       <if test="record.aliveTm != null">
         ALIVE_TM = #{record.aliveTm,jdbcType=BIGINT},
@@ -272,17 +272,17 @@
     update ts_task
     set TID = #{record.tid,jdbcType=BIGINT},
       TKEY = #{record.tkey,jdbcType=VARCHAR},
-      SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+      TSERVICE = #{record.tservice,jdbcType=VARCHAR},
+      PARAM = #{record.param,jdbcType=VARCHAR},
       CONF_TYPE = #{record.confType,jdbcType=VARCHAR},
       CONF_CRON_EXPRESSION = #{record.confCronExpression,jdbcType=VARCHAR},
       CONF_DELAY_TM = #{record.confDelayTm,jdbcType=BIGINT},
       CONF_INTERVAL_TM = #{record.confIntervalTm,jdbcType=BIGINT},
       CONF_EXE_TIMES = #{record.confExeTimes,jdbcType=BIGINT},
       PROCESSOR = #{record.processor,jdbcType=VARCHAR},
-      STATUS_END = #{record.statusEnd,jdbcType=CHAR},
-      MUTEX = #{record.mutex,jdbcType=CHAR},
+      TMUTEX = #{record.tmutex,jdbcType=CHAR},
       MUTEX_TM = #{record.mutexTm,jdbcType=BIGINT},
-      STATUS = #{record.status,jdbcType=CHAR},
+      TSTATUS = #{record.tstatus,jdbcType=CHAR},
       ALIVE_TM = #{record.aliveTm,jdbcType=BIGINT},
       VALID = #{record.valid,jdbcType=CHAR}
     <if test="_parameter != null">
@@ -295,8 +295,11 @@
       <if test="tkey != null">
         TKEY = #{tkey,jdbcType=VARCHAR},
       </if>
-      <if test="serviceName != null">
-        SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      <if test="tservice != null">
+        TSERVICE = #{tservice,jdbcType=VARCHAR},
+      </if>
+      <if test="param != null">
+        PARAM = #{param,jdbcType=VARCHAR},
       </if>
       <if test="confType != null">
         CONF_TYPE = #{confType,jdbcType=VARCHAR},
@@ -316,17 +319,14 @@
       <if test="processor != null">
         PROCESSOR = #{processor,jdbcType=VARCHAR},
       </if>
-      <if test="statusEnd != null">
-        STATUS_END = #{statusEnd,jdbcType=CHAR},
-      </if>
-      <if test="mutex != null">
-        MUTEX = #{mutex,jdbcType=CHAR},
+      <if test="tmutex != null">
+        TMUTEX = #{tmutex,jdbcType=CHAR},
       </if>
       <if test="mutexTm != null">
         MUTEX_TM = #{mutexTm,jdbcType=BIGINT},
       </if>
-      <if test="status != null">
-        STATUS = #{status,jdbcType=CHAR},
+      <if test="tstatus != null">
+        TSTATUS = #{tstatus,jdbcType=CHAR},
       </if>
       <if test="aliveTm != null">
         ALIVE_TM = #{aliveTm,jdbcType=BIGINT},
@@ -340,17 +340,17 @@
   <update id="updateByPrimaryKey" parameterType="com.jason798.timing.domain.gen.GenTask">
     update ts_task
     set TKEY = #{tkey,jdbcType=VARCHAR},
-      SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      TSERVICE = #{tservice,jdbcType=VARCHAR},
+      PARAM = #{param,jdbcType=VARCHAR},
       CONF_TYPE = #{confType,jdbcType=VARCHAR},
       CONF_CRON_EXPRESSION = #{confCronExpression,jdbcType=VARCHAR},
       CONF_DELAY_TM = #{confDelayTm,jdbcType=BIGINT},
       CONF_INTERVAL_TM = #{confIntervalTm,jdbcType=BIGINT},
       CONF_EXE_TIMES = #{confExeTimes,jdbcType=BIGINT},
       PROCESSOR = #{processor,jdbcType=VARCHAR},
-      STATUS_END = #{statusEnd,jdbcType=CHAR},
-      MUTEX = #{mutex,jdbcType=CHAR},
+      TMUTEX = #{tmutex,jdbcType=CHAR},
       MUTEX_TM = #{mutexTm,jdbcType=BIGINT},
-      STATUS = #{status,jdbcType=CHAR},
+      TSTATUS = #{tstatus,jdbcType=CHAR},
       ALIVE_TM = #{aliveTm,jdbcType=BIGINT},
       VALID = #{valid,jdbcType=CHAR}
     where TID = #{tid,jdbcType=BIGINT}

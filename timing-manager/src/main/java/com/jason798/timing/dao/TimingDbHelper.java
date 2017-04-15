@@ -1,18 +1,23 @@
-package com.jason798.timing;
+package com.jason798.timing.dao;
 
-
+import com.jason798.collection.CollectionUtil;
 import com.jason798.comm.ApplicationContextHepler;
+import com.jason798.common.CommonConstant;
 import com.jason798.common.DateUtil;
 import com.jason798.common.SystemUtil;
 import com.jason798.log.LogClient;
 import com.jason798.log.LogConstant;
 import com.jason798.net.IPUtil;
+import com.jason798.timing.TimingCommonHelper;
+import com.jason798.timing.TimingLockHelper;
 import com.jason798.timing.api.TimingManager;
-import com.jason798.timing.domain.gen.GenTaskHistory;
-import com.jason798.timing.domain.gen.GenTaskManager;
-import com.jason798.timing.mapper.gen.GenTaskHistoryMapper;
-import com.jason798.timing.mapper.gen.GenTaskManagerMapper;
-import com.jason798.timing.mapper.gen.GenTaskMapper;
+import com.jason798.timing.domain.TaskDomain;
+import com.jason798.timing.domain.TimingConstant;
+import com.jason798.timing.domain.gen.*;
+import com.jason798.timing.dao.mapper.biz.TaskMapper;
+import com.jason798.timing.dao.mapper.gen.GenTaskHistoryMapper;
+import com.jason798.timing.dao.mapper.gen.GenTaskManagerMapper;
+import com.jason798.timing.dao.mapper.gen.GenTaskMapper;
 import com.jason798.timing.task.BaseTimingTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +46,9 @@ public class TimingDbHelper {
     @Resource
     private GenTaskHistoryMapper genTaskHistoryMapper;
     @Resource
-    TimingCommonHelper timingCommonHelper;
+	TimingCommonHelper timingCommonHelper;
     @Resource
-    TimingLockHelper timingLockHelper;
+	TimingLockHelper timingLockHelper;
     @Resource
     TimingDbHelper timingDbHelper;
     @Resource
@@ -126,7 +131,7 @@ public class TimingDbHelper {
      */
     public boolean taskExistByKey(String key) {
         GenTaskExample param = new GenTaskExample();
-        param.createCriteria().andValidEqualTo(CommonConstant.VALID).andTkeyEqualTo(key);
+        param.createCriteria().andValidEqualTo(CommonConstant.Y).andTkeyEqualTo(key);
         if (genTaskMapper.countByExample(param) > 0) {
             return true;
         }

@@ -1,4 +1,4 @@
-package com.jason798.timing.mapper.gen;
+package com.jason798.timing.dao.mapper.gen;
 
 import com.jason798.timing.domain.gen.GenTaskHistory;
 import com.jason798.timing.domain.gen.GenTaskHistoryExample;

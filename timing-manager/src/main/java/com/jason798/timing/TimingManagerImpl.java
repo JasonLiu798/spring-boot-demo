@@ -1,6 +1,20 @@
 package com.jason798.timing;
 
+import com.jason798.character.StringCheckUtil;
+import com.jason798.comm.ApplicationContextHepler;
+import com.jason798.json.JSONFastJsonUtil;
+import com.jason798.log.LogClient;
+import com.jason798.log.LogConstant;
+import com.jason798.timing.api.AddTaskParam;
+import com.jason798.timing.api.RespDto;
+import com.jason798.timing.api.RetCode;
 import com.jason798.timing.api.TimingManager;
+import com.jason798.timing.dao.TimingDbHelper;
+import com.jason798.timing.domain.TaskDomain;
+import com.jason798.timing.domain.TaskEnum;
+import com.jason798.timing.domain.TimingConstant;
+import com.jason798.timing.domain.gen.GenTask;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -234,7 +248,7 @@ public class TimingManagerImpl implements TimingManager {
     private Object getTarget(String service) {
         Object target = null;
         try {
-            target = AOSApplicationContextHepler.getBeanByName(service);
+            target = ApplicationContextHepler.getBeanByName(service);
         } catch (Exception e) {
             LogClient.writeError(LogConstant.MODULE_TIMING, "get target service exception", e);
         }

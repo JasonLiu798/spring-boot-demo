@@ -35,7 +35,7 @@
 
         <sqlMapGenerator targetPackage="sqlmap.gen"
                          targetProject="src\main\resources"/>
-        <javaClientGenerator targetPackage="com.jason798.timing.mapper.gen"
+        <javaClientGenerator targetPackage="com.jason798.timing.dao.mapper.gen"
                              targetProject="src\main\java" type="XMLMAPPER"/>
 
         <!-- mapper
