@@ -59,10 +59,6 @@ public class RedisServiceFactory {
         //addDefaultRedisUtil();
     }
 
-    public static void addDefaultRedisUtil() {
-        RedisConfigHolder.initFromRedisUtil(RedisConstant.TP_ADMIN);
-    }
-
     /**
      * must call before use
      *
